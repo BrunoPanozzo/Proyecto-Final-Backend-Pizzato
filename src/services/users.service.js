@@ -22,8 +22,8 @@ class UsersServices {
         return await this.dao.getUsers()
     }
 
-    async deleteUser(uid){
-        const result = await this.dao.deleteUser(uid)
+    async deleteUser(user){
+        const result = await this.dao.deleteUser(user)
         if (!result) {
             return false
         }

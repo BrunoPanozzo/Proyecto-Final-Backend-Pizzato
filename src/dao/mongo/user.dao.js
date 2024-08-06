@@ -162,10 +162,13 @@ class UserDAO {
         }
     }
 
-    async deleteUser(idUser) {
-        try {          
-            const user = await UserModel.deleteOne(idUser)            
-        } catch (error) {
+    async deleteUser(user) {
+        try {     
+            const result = await UserModel.deleteOne(user) 
+            if (!result) {
+                return false
+            }           
+        } catch (err) {
             return false
         }
 
