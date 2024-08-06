@@ -1,0 +1,52 @@
+.alturaCaja {
+    height: 500px
+}
+
+.img-product {
+    max-width: 20rem;
+    min-height: 20rem;
+}
+
+.container-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Centra horizontalmente */
+}
+
+/* .container {
+    margin-bottom: 20px;   //Ajusta el espacio entre los contenedores 
+} */
+
+.container {
+    display: flex;
+    justify-content: flex-end; /* Alinea los elementos a la derecha */
+    align-items: center; /* Centra verticalmente los elementos */
+}
+
+.user-session,
+.logout {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 20px;    
+}
+
+.user-session {
+    float: left;   
+    text-align: right;    
+    color: blue;    
+}
+
+.logout {
+    float: right;    
+}
+
+.divEncabezado {
+    max-width: auto;
+    margin-bottom: 2px;
+    margin-top: 0;
+    padding: 0;
+    background-color: rgba(153, 217, 234);
+    border-radius: 2px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}

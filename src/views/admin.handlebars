@@ -1,0 +1,66 @@
+<body>
+    <h1 class="text-center">Lista de Usuarios</h1>
+    <div class="divEncabezado">
+        <div class="container">
+            <div class="user-session">
+                <p class="p-1 mt-1 mb-1">Bienvenido, <strong>Super Usuario Coder</strong> !!!</p>
+                <p class="p-1 mt-1 mb-1">Administrador</p>
+            </div>
+            <div class="container">
+                <a href="/api/sessions/logout">
+                    <button type="submit" class="btn btn-primary mb-3">Logout</button>
+                </a>
+                <a href="/">
+                    <button type="submit" class="btn btn-primary mb-3">Volver</button>
+                </a>
+            </div>
+        </div>
+    </div>    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <table class="table table-bordered mt-4 text-center">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each docs}}                      
+                        <tr>
+                            <td>{{this.first_name}}</td>
+                            <td>{{this.last_name}}</td>
+                            <td>{{this.email}}</td>
+                            <td>{{this.rol}}</td>
+                            <td>
+                                <form method="put" user-id="{{this._id}}">
+                                    <button id="modificar-rol-usuario" type="button" class="btn btn-secondary">Modificar
+                                        Rol</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="delete" user-id="{{this._id}}">
+                                    <button id="eliminar-usuario" type="button" class="btn btn-danger">Eliminar
+                                        Usuario</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <form class="text-center" method="delete">
+        <button id="eliminar-usuarios-inactivos" type="button" class="btn btn-primary text-decoration text-center">Borrar
+            Usuarios sin Actividad</button>
+    </form>
+
+    <script src="/js/deleteUser.js"></script>
+    <script src="/js/deleteInactiveUsers.js"></script>
+    <script src="/js/changeRol.js"></script>
