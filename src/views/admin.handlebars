@@ -25,17 +25,19 @@
                         <th>Apellido</th>
                         <th>Email</th>
                         <th>Rol</th>
+                        <th>Ultima conexion</th>
                         <th></th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each docs}}
+                    {{#each docs}}                    
                     <tr>
                         <td>{{this.first_name}}</td>
                         <td>{{this.last_name}}</td>
                         <td>{{this.email}}</td>
                         <td>{{this.rol}}</td>
+                        <td>{{this.last_connection}}</td>
                         <td>
                             <form user-id="{{this._id}}">
                                 <button class="modificar-rol-usuario btn btn-secondary">Modificar

@@ -22,6 +22,7 @@ class SessionController {
             const date = new Date().toLocaleString()
             await this.service.lastConnection(email, date)
             req.session.user = new UserDTO(req.user)
+            req.user.last_connection = Date.now()
             //req.session.user = { _id: req.user._id, first_name: req.user.first_name, last_name: req.user.last_name, age: req.user.age, email: req.user.email, rol: req.user.rol, cart: req.user.cart }
             //res.sendSuccess(req.user._id)
             // res.status(200).send({

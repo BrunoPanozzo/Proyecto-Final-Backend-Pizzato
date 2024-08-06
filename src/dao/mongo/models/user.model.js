@@ -21,7 +21,10 @@ const schema = new mongoose.Schema({
         type: String, 
         default: 'empty' 
     },
-    last_connection: String,
+    last_connection:  { 
+        type: Date,    
+        default: Date.now 
+    },
     documents: {
         type: [
             {

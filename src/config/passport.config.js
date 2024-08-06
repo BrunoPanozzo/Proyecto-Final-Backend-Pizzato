@@ -157,8 +157,7 @@ const initializeStrategy = () => {
                     email: username,
                     password: password,
                     cart: null,
-                    rol: "admin",
-                    last_connection: new Date().toLocaleString()
+                    rol: "admin"                   
                 };                
                 return done(null, user);
             }
@@ -173,8 +172,7 @@ const initializeStrategy = () => {
                     email: username,
                     password: password,
                     cart: null,
-                    rol: "superadmin",
-                    last_connection: new Date().toLocaleString()
+                    rol: "superadmin"               
                 };
                 return done(null, user);
             }  
