@@ -9,7 +9,7 @@ class UsersController {
 
     async changeRole(req, res) {
         try {
-            const idUser = req.params.uid
+            const idUser = req.params.uid            
             const user = await this.service.changeRole(idUser)
             if (!user) {
                 return user === false
