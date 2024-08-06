@@ -1,11 +1,11 @@
-const modifyUserButtons = document.querySelectorAll('#modificar-rol-usuario')
+const modifyUserButtons = document.querySelectorAll('.modificar-rol-usuario')
 
 modifyUserButtons.forEach(button => {
     button.addEventListener('click', e => {
         e.preventDefault()       
 
         // Obtengo el ID del usuario que deseo cambiar de rol
-        const userId = form.getAttribute('user-id')
+        const userId = button.closest('form').getAttribute('user-id')
                 
         // Realizo una solicitud de cambio de rol al servidor
         fetch(`/api/users/premium/${userId}`, {

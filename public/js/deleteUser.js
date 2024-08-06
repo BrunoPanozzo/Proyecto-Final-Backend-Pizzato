@@ -1,4 +1,4 @@
-const deleteUserButtons = document.querySelectorAll('#eliminar-usuario')
+const deleteUserButtons = document.querySelectorAll('.eliminar-usuario')
 
 deleteUserButtons.forEach(button => {
     button.addEventListener('click', e => {

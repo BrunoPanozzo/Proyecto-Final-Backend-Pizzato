@@ -82,11 +82,9 @@ class UsersController {
         const {
             uid
         } = req.params  
-        const user = await this.service.getUserById(uid)
-        console.log(user, uid)
-        const email = user.email
-        const esBorrado = await this.service.deleteUser(uid)
-    
+        const user = await this.service.getUserById(uid)       
+        const email = user.email 
+        const esBorrado = await this.service.deleteUser(uid)       
         if (esBorrado) {
             if (email) {
                 let result = await transport.sendMail({
