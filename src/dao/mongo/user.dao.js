@@ -6,6 +6,10 @@ class UserDAO {
     findByEmail = async (email) => {
         try {
             const user = await UserModel.findOne(email)
+            if (user) {
+                user.last_connection = Date.now()
+                await this.updateLastConnection({ email: user.email }, user.last_connection)
+            }
             return user?.toObject() ?? null
         }
         catch (err) {
