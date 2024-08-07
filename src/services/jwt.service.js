@@ -18,7 +18,8 @@ class JwtServices {
                 email: config.ADMIN_EMAIL,
                 cart: null,
                 rol: "admin",
-                _id: "jh235hlki23463nkhlo"
+                _id: "jh235hlki23463nkhlo",
+                last_connection: Date.now()
             }            
         }
         else if (email === config.SUPER_ADMIN_EMAIL && password === config.SUPER_ADMIN_PASSWORD) {
@@ -30,7 +31,8 @@ class JwtServices {
                 email: config.SUPER_ADMIN_EMAIL,
                 cart: null,
                 rol: "superadmin",
-                _id: "kflshGKSGNasbsgj3dae"
+                _id: "kflshGKSGNasbsgj3dae",
+                last_connection: Date.now()
             }
         }
         else {
@@ -78,8 +80,8 @@ class JwtServices {
         return await this.dao.getUserByCartId(idCart)
     }
 
-    async lastConnection(email, date){
-        return await this.dao.lastConnection(email, date)
+    async updateLastConnection(email, date){
+        return await this.dao.updateLastConnection(email, date)
     }
 
     // async changeRole(idUser) {

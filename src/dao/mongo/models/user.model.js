@@ -22,8 +22,7 @@ const schema = new mongoose.Schema({
         default: 'empty' 
     },
     last_connection:  { 
-        type: Date,    
-        default: Date.now 
+        type: Date // ultimo login y logout        
     },
     documents: {
         type: [

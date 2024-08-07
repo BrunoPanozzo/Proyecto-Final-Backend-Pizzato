@@ -56,7 +56,8 @@ const initializeStrategy = () => {
                 age: 47,
                 email: profile._json.email,
                 password: '',
-                cart: emptyCart
+                cart: emptyCart,
+                last_connection: Date.now()
             }
 
             //const result = await User.create(newUser)
@@ -157,7 +158,8 @@ const initializeStrategy = () => {
                     email: username,
                     password: password,
                     cart: null,
-                    rol: "admin"                   
+                    rol: "admin",
+                    last_connection: Date.now()                   
                 };                
                 return done(null, user);
             }

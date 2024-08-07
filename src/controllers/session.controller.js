@@ -18,11 +18,10 @@ class SessionController {
             //if (!req.user) return res.status(400).send('Invalid credentials!')
             // crear nueva sesión si el usuario existe   
             //console.log(req.user)                      
-            const { email } = req.body.email           
-            const date = new Date().toLocaleString()
-            await this.service.lastConnection(email, date)
-            req.session.user = new UserDTO(req.user)
-            req.user.last_connection = Date.now()
+            const { email } = req.body.email    
+            req.user.last_connection = Date.now()      
+            await this.service.updateLastConnection(email, Date.now())
+            req.session.user = new UserDTO(req.user)            
             //req.session.user = { _id: req.user._id, first_name: req.user.first_name, last_name: req.user.last_name, age: req.user.age, email: req.user.email, rol: req.user.rol, cart: req.user.cart }
             //res.sendSuccess(req.user._id)
             // res.status(200).send({
@@ -42,12 +41,12 @@ class SessionController {
         //res.send({ status: 'error', message: 'Login failed!' })
     }
 
-    logout(req, res) {
+    async logout(req, res) {
         try {
             const { email } = req.body
-            req.session.destroy(async _ => {                
-                const date = new Date().toLocaleString()
-                await this.service.lastConnection(email, date)
+            req.user.last_connection = Date.now()
+            await this.service.updateLastConnection(email, Date.now())          
+            req.session.destroy(_ => {              
                 //res.sendSuccess(req.user._id)
                 // res.status(200).send({
                 //     message: 'Sesión cerrada exitosamente'
