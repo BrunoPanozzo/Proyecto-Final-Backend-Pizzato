@@ -5,11 +5,7 @@ class UserDAO {
 
     findByEmail = async (email) => {
         try {
-            const user = await UserModel.findOne(email)
-            if (user) {
-                user.last_connection = Date.now()
-                await this.updateLastConnection({ email: user.email }, user.last_connection)
-            }
+            const user = await UserModel.findOne(email)            
             return user?.toObject() ?? null
         }
         catch (err) {
@@ -96,7 +92,7 @@ class UserDAO {
         }
     }
 
-    async updateLastConnection(email, date) {
+    async updateLastConnection(email, date) {          
         return await UserModel.updateOne(email, { $set: { last_connection: date } })
     }
 

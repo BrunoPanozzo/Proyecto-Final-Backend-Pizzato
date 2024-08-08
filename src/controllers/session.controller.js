@@ -13,15 +13,17 @@ class SessionController {
     }
 
     async login(req, res) {
-        try {                       
+        try {
             if (!req.user) return res.sendUserError('Invalid credentials!')
             //if (!req.user) return res.status(400).send('Invalid credentials!')
             // crear nueva sesión si el usuario existe   
             //console.log(req.user)                      
-            const { email } = req.body.email    
-            req.user.last_connection = Date.now()      
-            await this.service.updateLastConnection(email, Date.now())
-            req.session.user = new UserDTO(req.user)            
+            const email = req.body.email
+            if (req.user.rol != "admin" && req.user.rol != "superadmin") {
+                req.user.last_connection = Date.now()              
+                await this.service.updateLastConnection(email, req.user.last_connection)
+            }
+            req.session.user = new UserDTO(req.user)
             //req.session.user = { _id: req.user._id, first_name: req.user.first_name, last_name: req.user.last_name, age: req.user.age, email: req.user.email, rol: req.user.rol, cart: req.user.cart }
             //res.sendSuccess(req.user._id)
             // res.status(200).send({
@@ -29,7 +31,7 @@ class SessionController {
             // })
             res.redirect('/products')
         }
-        catch (err) {                         
+        catch (err) {
             //return res.status(500).json({ message: err.message })
             return res.sendServerError(err)
         }
@@ -43,10 +45,12 @@ class SessionController {
 
     async logout(req, res) {
         try {
-            const { email } = req.body
-            req.user.last_connection = Date.now()
-            await this.service.updateLastConnection(email, Date.now())          
-            req.session.destroy(_ => {              
+            const email = req.body.email
+            if (req.user.rol != "admin" && req.user.rol != "superadmin") {
+                req.user.last_connection = Date.now()              
+                await this.service.updateLastConnection(email, req.user.last_connection)
+            }            
+            req.session.destroy(_ => {
                 //res.sendSuccess(req.user._id)
                 // res.status(200).send({
                 //     message: 'Sesión cerrada exitosamente'
@@ -106,7 +110,7 @@ class SessionController {
     }
 
     forget_password = async (req, res) => {
-        const { email } = req.body       
+        const { email } = req.body
         if (email) {
             try {
                 const token = jwt.sign({ email }, SECRET, { expiresIn: '1h' })
@@ -187,7 +191,7 @@ class SessionController {
     //         res.sendServerError(err)
     //     }
     // }   
-       
+
 }
 
 module.exports = { SessionController }
