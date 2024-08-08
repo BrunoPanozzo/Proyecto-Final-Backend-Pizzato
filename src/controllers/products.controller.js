@@ -125,8 +125,8 @@ class ProductsController {
 
     async deleteProduct(req, res) {
         try {
-            const prodId = req.pid
-            const producto = await this.service.getProductById(prodId)
+            const prodId = req.pid            
+            const producto = await this.service.getProductById(prodId)           
             if (!producto) {
                 return producto === false
                     ? res.sendNotFoundError({ message: 'Not found!' }, 404)
@@ -140,7 +140,7 @@ class ProductsController {
                     error: 'No autorizado'
                 })
             }
-            if (req.session.user.rol === 'premium') {
+            if (req.session.user.rol === 'premium') {               
                 // Enviar correo electrónico al usuario premium por el producto eliminado 
                 const mailOptions = {
                     from: 'Administrador Coder <verizzato@gmail.com>',
@@ -155,7 +155,7 @@ class ProductsController {
                     res.sendUserError(err)
                 }
             }
-            await this.service.deleteProduct(prodId)
+            await this.service.deleteProduct(prodId)            
             return res.sendSuccess('Producto Eliminado correctamente')
             // return res.status(200).json({ message: "Producto Eliminado correctamente" })    // HTTP 200 OK
         }

@@ -33,9 +33,9 @@ class ViewsRouter extends Router {
 
         this.get('/carts/:cid', userIsLoggedIn, withController((controller, req, res) => controller.getCartById(req, res)))
 
-        this.get('/realtimeproducts', userIsLoggedIn, userIsAdmin, withController((controller, req, res) => controller.getRealTimeProducts(req, res)))
+        this.get('/realtimeproducts', userIsLoggedIn, userIsAdminOrPremium, withController((controller, req, res) => controller.getRealTimeProducts(req, res)))
 
-        this.post('/realtimeproducts', validarNuevoProducto, userIsLoggedIn, userIsAdmin, withController((controller, req, res) => controller.postRealTimeProducts(req, res)))
+        this.post('/realtimeproducts', validarNuevoProducto, userIsLoggedIn, userIsAdminOrPremium, withController((controller, req, res) => controller.postRealTimeProducts(req, res)))
 
         this.get('/newProduct', userIsLoggedIn, userIsAdminOrPremium, withController((controller, req, res) => controller.newProduct(req, res)))
 

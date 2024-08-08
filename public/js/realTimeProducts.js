@@ -18,16 +18,20 @@ socket.on('newProduct', (product) => {  // Agregar el nuevo producto al HTML
 document.addEventListener("DOMContentLoaded", function () {
   const allDeleteButtons = document.querySelectorAll(".btn-eliminarProd")
   allDeleteButtons.forEach(btn => {
-    btn.addEventListener("click", function () {      
+    btn.addEventListener("click", function () {
       socket.emit('deleteProduct', `${btn.id}`) // Emito evento 'deleteProduct' al servidor para borrar el producto
     });
   });
 })
 
 // Escucho el evento de 'productDeleted' proveniente del servidor y actualizo la vista '/realtimeproducts' eliminando el producto
-socket.on('productDeleted', (productId) => { 
+socket.on('productDeleted', (productId) => {
   const productToDelete = document.getElementById(productId);
-  if (productToDelete) {   
-    productToDelete.remove();
+  if (productToDelete) {
+    // Llamar al endpoint de eliminación de productos 
+    fetch(`http://localhost:8080/api/products/${productId}`, {
+      method: 'DELETE'
+    })
+    //productToDelete.remove();
   }
 });

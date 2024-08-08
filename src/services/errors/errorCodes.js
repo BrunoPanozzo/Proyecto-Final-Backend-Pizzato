@@ -4,8 +4,7 @@ const ErrorCodes = {
     INVALID_TYPES_ERROR: 2,
     DATABASE_ERROR: 3,
     INVALID_PARAM_ERROR: 4,
-    NOT_FOUND: 5,
-    INVALID_PASSWORD: 6
+    NOT_FOUND: 5   
 }
 
 module.exports = { ErrorCodes }
