@@ -5,7 +5,7 @@ class UserDAO {
 
     findByEmail = async (email) => {
         try {
-            const user = await UserModel.findOne(email)            
+            const user = await UserModel.findOne(email)
             return user?.toObject() ?? null
         }
         catch (err) {
@@ -37,7 +37,7 @@ class UserDAO {
     }
 
     async getUsers() {
-        try {
+        try {           
             const users = await UserModel.find()
             return users.map(u => u.toObject())
         }
@@ -92,7 +92,7 @@ class UserDAO {
         }
     }
 
-    async updateLastConnection(email, date) {               
+    async updateLastConnection(email, date) {
         return await UserModel.updateOne({ email }, { $set: { last_connection: date } })
     }
 
@@ -163,11 +163,11 @@ class UserDAO {
     }
 
     async deleteUser(user) {
-        try {     
-            const result = await UserModel.deleteOne(user) 
+        try {
+            const result = await UserModel.deleteOne(user)
             if (!result) {
                 return false
-            }           
+            }
         } catch (err) {
             return false
         }
@@ -177,6 +177,19 @@ class UserDAO {
 
     async deleteInactiveUsers() {
         try {
+            // const thirtyMinutesAgo = new Date();
+            // thirtyMinutesAgo.setMinutes(thirtyMinutesAgo.getMinutes() - 30);  // Resto 30 minutos a la fecha actual
+
+            // // Busco todos los usuarios cuya última conexión (last_connection) sea anterior a la fecha almacenada en thirtyMinutesAgo
+            // const deletedUsers = await UserModel.find({
+            //     last_connection: { $lt: thirtyMinutesAgo }  // last_connection menor que thirtyMinutesAgo
+            // });
+
+            // // Elimino todos los usuarios cuya última conexión (last_connection) sea anterior a la fecha almacenada en thirtyMinutesAgo
+            // const result = await UserModel.deleteMany({
+            //     last_connection: { $lt: thirtyMinutesAgo }  // last_connection menor que thirtyMinutesAgo
+            // });
+            
             const twoDaysAgo = new Date() // la fecha y hora actual
             twoDaysAgo.setDate(twoDaysAgo.getDate() - 2)  // Resto 2 días a la fecha actual (twoDaysAgo ahora contiene la fecha y hora de hace 2 días)
 
@@ -188,7 +201,7 @@ class UserDAO {
             // Elimino todos los usuarios cuya última conexión (last_connection) sea anterior a la fecha almacenada en twoDaysAgo (se eliminan los usuarios inactivos)
             const result = await UserModel.deleteMany({
                 last_connection: { $lt: twoDaysAgo }  // last_connection menor que twoDaysAgo (menor que hace 2 dias)
-            })
+            })          
 
             return { deletedCount: result.deletedCount, deletedUsers }
         } catch (error) {

@@ -40,37 +40,29 @@ class UsersController {
 
     async getUsers() {
         let listado = [] 
-        
+       
         listado = await this.service.getUsers()
-
-        listado = listado.map(user => {
-            const { first_name, last_name, email, rol } = user
-            return { first_name, last_name, email, rol }
-        })
+        
+        //listado = listado.map(({first_name, last_name, email, rol, last_connection}) => ({first_name, last_name, email, rol, last_connection}))
 
         if (listado) {
-            res.send({
-                status: "success",
-                payload: listado
-            })
+            res.render('admin', { docs: listado, mostrarMasInfo: true })
         } else {
-            res.send({
-                status: "empty",
-                payload: listado
-            })
+            res.render('admin', { docs: [], mostrarMasInfo: true })
         }
+       
     }
     
     async admin(req, res){
         try {
-            let listado = [] 
-            
+            let listado = []
+                     
             listado = await this.service.getUsers()
              
             if (listado) {
-                res.render('admin', { docs: listado })
+                res.render('admin', { docs: listado, mostrarMasInfo: false })
             } else {
-                res.render('admin', { listado: [] })
+                res.render('admin', { docs: [], mostrarMasInfo: false })
             }
     
         } catch (err) {

@@ -1,66 +1,76 @@
 <h1 class="text-center">Lista de Usuarios</h1>
 <div class="divEncabezado">
-    <div class="container">
-        <div class="user-session">
-            <p class="p-1 mt-1 mb-1">Bienvenido, <strong>Super Usuario Coder</strong> !!!</p>
-            <p class="p-1 mt-1 mb-1">Administrador</p>
-        </div>
-        <div class="container">
-            <a href="/api/sessions/logout">
-                <button type="submit" class="btn btn-primary mb-3">Logout</button>
-            </a>
-            <a href="/">
-                <button type="submit" class="btn btn-primary mb-3">Volver</button>
-            </a>
-        </div>
+  <div class="container">
+    <div class="user-session">
+      <p class="p-1 mt-1 mb-1">Bienvenido,
+        <strong>Super Usuario Coder</strong>
+        !!!</p>
+      <p class="p-1 mt-1 mb-1">Administrador</p>
     </div>
+    <div class="container">
+      <a href="/api/sessions/logout">
+        <button type="submit" class="btn btn-primary mb-3">Logout</button>
+      </a>
+      <a href="/">
+        <button type="submit" class="btn btn-primary mb-3">Volver</button>
+      </a>
+    </div>
+  </div>
 </div>
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <table class="table table-bordered mt-4 text-center">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Email</th>
-                        <th>Rol</th>
-                        <th>Ultima conexion</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each docs}}                    
-                    <tr>
-                        <td>{{this.first_name}}</td>
-                        <td>{{this.last_name}}</td>
-                        <td>{{this.email}}</td>
-                        <td>{{this.rol}}</td>
-                        <td>{{this.last_connection}}</td>
-                        <td>
-                            <form user-id="{{this._id}}">
-                                <button class="modificar-rol-usuario btn btn-secondary">Modificar
-                                    Rol</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form user-id="{{this._id}}">
-                                <button class="eliminar-usuario btn btn-danger">Eliminar
-                                    Usuario</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <table class="table table-bordered mt-4 text-center">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Rol</th>
+            {{#unless mostrarMasInfo}}
+              <th>Ultima conexion</th>
+              <th></th>
+              <th></th>
+            {{/unless}}
+          </tr>
+        </thead>
+        <tbody>
+          {{#each docs}}
+            <tr>
+              <td>{{this.first_name}}</td>
+              <td>{{this.last_name}}</td>
+              <td>{{this.email}}</td>
+              <td>{{this.rol}}</td>
+              {{#unless mostrarMasInfo}}
+                <td>{{this.last_connection}}</td>
+                <td>
+                  <form user-id="{{this._id}}">
+                    <button
+                      class="modificar-rol-usuario btn btn-secondary"
+                    >Modificar Rol</button>
+                  </form>
+                </td>
+                <td>
+                  <form user-id="{{this._id}}">
+                    <button class="eliminar-usuario btn btn-danger">Eliminar
+                      Usuario</button>
+                  </form>
+                </td>
+              {{/unless}}
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
     </div>
+  </div>
 </div>
-<form class="text-center">
-    <button class="eliminar-usuarios-inactivos btn btn-primary text-decoration text-center">Borrar
-        Usuarios sin Actividad</button>
-</form>
+{{#unless mostrarMasInfo}}
+  <form class="text-center">
+    <button
+      class="eliminar-usuarios-inactivos btn btn-primary text-decoration text-center"
+    >Borrar Usuarios sin Actividad</button>
+  </form>
+{{/unless}}
 
 <script src="/js/deleteUser.js"></script>
 <script src="/js/deleteInactiveUsers.js"></script>
