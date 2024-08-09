@@ -92,8 +92,8 @@ class UserDAO {
         }
     }
 
-    async updateLastConnection(email, date) {          
-        return await UserModel.updateOne(email, { $set: { last_connection: date } })
+    async updateLastConnection(email, date) {               
+        return await UserModel.updateOne({ email }, { $set: { last_connection: date } })
     }
 
     async changeRole(idUser) {

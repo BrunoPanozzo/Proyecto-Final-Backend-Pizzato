@@ -22,7 +22,7 @@ class SessionController {
             if (req.user.rol != "admin" && req.user.rol != "superadmin") {
                 req.user.last_connection = Date.now()              
                 await this.service.updateLastConnection(email, req.user.last_connection)
-            }
+            }        
             req.session.user = new UserDTO(req.user)
             //req.session.user = { _id: req.user._id, first_name: req.user.first_name, last_name: req.user.last_name, age: req.user.age, email: req.user.email, rol: req.user.rol, cart: req.user.cart }
             //res.sendSuccess(req.user._id)
@@ -32,6 +32,7 @@ class SessionController {
             res.redirect('/products')
         }
         catch (err) {
+            console.log(err)
             //return res.status(500).json({ message: err.message })
             return res.sendServerError(err)
         }
