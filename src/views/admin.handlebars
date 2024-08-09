@@ -26,9 +26,7 @@
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Email</th>
-            <th>Rol</th>    
-             <p>mostrarMasInfo encabezado: {{mostrarMasInfo}}</p>
-
+            <th>Rol</th>   
             {{#if mostrarMasInfo}}
               <th>Ultima conexion</th>
               <th></th>
@@ -42,8 +40,7 @@
               <td>{{this.first_name}}</td>
               <td>{{this.last_name}}</td>
               <td>{{this.email}}</td>
-              <td>{{this.rol}}</td>
-              <p>mostrarMasInfo contenido fila: {{mostrarMasInfo}}</p>
+              <td>{{this.rol}}</td>              
               {{#if ../mostrarMasInfo}}
                 <td>{{this.last_connection}}</td>
                 <td>
