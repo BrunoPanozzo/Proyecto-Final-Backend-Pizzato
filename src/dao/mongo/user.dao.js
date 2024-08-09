@@ -177,17 +177,17 @@ class UserDAO {
 
     async deleteInactiveUsers() {
         try {
-            const sevenDaysAgo = new Date()
-            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 2)  // Resto 2 días a la fecha actual
+            const twoDaysAgo = new Date() // la fecha y hora actual
+            twoDaysAgo.setDate(twoDaysAgo.getDate() - 2)  // Resto 2 días a la fecha actual (twoDaysAgo ahora contiene la fecha y hora de hace 2 días)
 
-            // Busco todos los ususarios cuya ultima conexion (last_connection) sea anterior a la fecha almacenada en sevenDaysAgo
+            // Busco todos los ususarios cuya ultima conexion (last_connection) sea anterior a la fecha almacenada en twoDaysAgo (usuarios que no se han conectado en los últimos 2 días)
             const deletedUsers = await UserModel.find({
-                last_connection: { $lt: sevenDaysAgo }  // last_connection menor que sevenDaysAgo 
+                last_connection: { $lt: twoDaysAgo }  // last_connection menor que twoDaysAgo (menor que hace 2 dias)
             })
 
-            // Elimino todos los usuarios cuya última conexión (last_connection) sea anterior a la fecha almacenada en sevenDaysAgo
+            // Elimino todos los usuarios cuya última conexión (last_connection) sea anterior a la fecha almacenada en twoDaysAgo (se eliminan los usuarios inactivos)
             const result = await UserModel.deleteMany({
-                last_connection: { $lt: sevenDaysAgo }  // last_connection menor que sevenDaysAgo 
+                last_connection: { $lt: twoDaysAgo }  // last_connection menor que twoDaysAgo (menor que hace 2 dias)
             })
 
             return { deletedCount: result.deletedCount, deletedUsers }
