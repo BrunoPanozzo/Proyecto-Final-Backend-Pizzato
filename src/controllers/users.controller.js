@@ -46,9 +46,9 @@ class UsersController {
         //listado = listado.map(({first_name, last_name, email, rol, last_connection}) => ({first_name, last_name, email, rol, last_connection}))
 
         if (listado) {
-            res.render('admin', { docs: listado, mostrarMasInfo: true })
+            res.render('admin', { docs: listado, mostrarMasInfo: false })
         } else {
-            res.render('admin', { docs: [], mostrarMasInfo: true })
+            res.render('admin', { docs: [], mostrarMasInfo: false })
         }
        
     }
@@ -60,9 +60,9 @@ class UsersController {
             listado = await this.service.getUsers()
              
             if (listado) {
-                res.render('admin', { docs: listado, mostrarMasInfo: false })
+                res.render('admin', { docs: listado, mostrarMasInfo: true })
             } else {
-                res.render('admin', { docs: [], mostrarMasInfo: false })
+                res.render('admin', { docs: [], mostrarMasInfo: true })
             }
     
         } catch (err) {

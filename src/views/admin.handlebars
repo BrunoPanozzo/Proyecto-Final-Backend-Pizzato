@@ -26,12 +26,14 @@
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Email</th>
-            <th>Rol</th>
-            {{#unless mostrarMasInfo}}
+            <th>Rol</th>    
+             <p>mostrarMasInfo encabezado: {{mostrarMasInfo}}</p>
+
+            {{#if mostrarMasInfo}}
               <th>Ultima conexion</th>
               <th></th>
               <th></th>
-            {{/unless}}
+            {{/if}}
           </tr>
         </thead>
         <tbody>
@@ -41,22 +43,23 @@
               <td>{{this.last_name}}</td>
               <td>{{this.email}}</td>
               <td>{{this.rol}}</td>
-              {{#unless mostrarMasInfo}}
+              <p>mostrarMasInfo contenido fila: {{mostrarMasInfo}}</p>
+              {{#if ../mostrarMasInfo}}
                 <td>{{this.last_connection}}</td>
                 <td>
-                  <form user-id="{{this._id}}">
+                  <div user-id="{{this._id}}">
                     <button
                       class="modificar-rol-usuario btn btn-secondary"
                     >Modificar Rol</button>
-                  </form>
+                  </div>
                 </td>
                 <td>
-                  <form user-id="{{this._id}}">
+                  <div user-id="{{this._id}}">
                     <button class="eliminar-usuario btn btn-danger">Eliminar
                       Usuario</button>
-                  </form>
+                  </div>
                 </td>
-              {{/unless}}
+              {{/if}}
             </tr>
           {{/each}}
         </tbody>
@@ -64,13 +67,13 @@
     </div>
   </div>
 </div>
-{{#unless mostrarMasInfo}}
-  <form class="text-center">
+{{#if mostrarMasInfo}}
+  <div class="text-center">
     <button
       class="eliminar-usuarios-inactivos btn btn-primary text-decoration text-center"
     >Borrar Usuarios sin Actividad</button>
-  </form>
-{{/unless}}
+  </div>
+{{/if}}
 
 <script src="/js/deleteUser.js"></script>
 <script src="/js/deleteInactiveUsers.js"></script>
