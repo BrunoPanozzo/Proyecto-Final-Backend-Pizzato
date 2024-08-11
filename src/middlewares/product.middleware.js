@@ -22,10 +22,10 @@ const soloNumPositivosYcero = (code) => {
     return (/^[0-9]+$/.test(code) && (code >= 0))
 }
 
-const validarDatos = (title, description, price, thumbnail, code, stock, status, category, owner) => {
-    if (!title || !description || !price || !thumbnail || !code || !stock || !status || !category || !owner) {
+const validarDatos = (title, description, price, thumbnail, code, stock, status, category) => {
+    if (!title || !description || !price || !thumbnail || !code || !stock || !status || !category) {
         return false
-    }
+    }   
     if (isNaN(price) || isNaN(stock)) {
         return false
     }
@@ -35,54 +35,53 @@ const validarDatos = (title, description, price, thumbnail, code, stock, status,
     if (!soloNumPositivosYcero(stock)) {
         return false
     }
-    if (!Array.isArray(thumbnail)) {
+   
+    if (!Array.isArray(thumbnail)) {       
         return false
     }
-    else {
+    else {       
         let rutasValidas = true
         thumbnail.forEach(ruta => {
             if (typeof ruta != "string") {
                 rutasValidas = false
                 return
             }
-        })
-        if (!rutasValidas) {
+        })        
+        if (!rutasValidas) {            
             return false
         }
-    }
-    if (!soloNumYletras(code)) {
+    }  
+    if (!soloNumYletras(code)) {       
         return false
     }
+    
     var boolStatus = status
-    if (typeof boolStatus != "boolean") {
+    if (typeof boolStatus != "boolean") {       
         return false
     }
-
+    
     return true
 }
 
 // Middleware para validacion de datos al agregar un producto 
 const validarNuevoProducto = async (req, res, next) => { 
-    const product = req.body
+    const product = req.body    
     product.price = +product.price
-    product.stock = +product.stock
-    //product.thumbnail = [product.thumbnail]
-    product.thumbnail = product.thumbnail
+    product.stock = +product.stock  
     product.status = JSON.parse(product.status)
 
     const title = product.title
     const description = product.description
     const price = product.price
-    const thumbnail = product.thumbnail
+    const thumbnail = [product.thumbnail]
     const code = product.code
     const stock = product.stock
     const status = product.status
-    const category = product.category
-    const owner = product.owner
+    const category = product.category     
        
-    try {
-        if (validarDatos(title, description, price, thumbnail, code, stock, status, category, owner)) {
-            const prod = await productsService.getProductByCode(product.code)         
+    try {       
+        if (validarDatos(title, description, price, thumbnail, code, stock, status, category)) {
+            const prod = await productsService.getProductByCode(product.code) 
             if (prod) {
                 // res.status(400).json({ error: "Codigo ya existente" })
                 // return

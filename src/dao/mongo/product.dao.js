@@ -56,8 +56,8 @@ class ProductDAO {
     }
 
     getProductByCode = async (prodCode) => {
-        try {
-            const producto = await ProductModel.findOne({ code: prodCode })
+        try {           
+            const producto = await ProductModel.findOne({ code: prodCode })           
             return producto?.toObject() ?? null
         }
         catch (err) {

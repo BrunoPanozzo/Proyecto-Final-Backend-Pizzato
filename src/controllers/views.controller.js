@@ -254,12 +254,12 @@ class ViewsController {
     }
 
     async postRealTimeProducts(req, res) {
-        try {
-            const user = req.session.user  
-            const product = req.body
+        try {              
+            const user = req.session.user              
+            const product = req.body        
             // Convertir el valor status "true" o "false" a booleano        
-            var boolStatus = JSON.parse(product.status)
-            product.thumbnail = ["/images/" + product.thumbnail]
+            var boolStatus = JSON.parse(product.status)             
+            product.thumbnail = product.thumbnail          
             product.price = +product.price
             product.stock = +product.stock
             await this.productsService.addProduct(

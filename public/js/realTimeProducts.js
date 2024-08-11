@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 })
 
-// Escucho el evento de 'productDeleted' proveniente del servidor y actualizo la vista '/realtimeproducts' eliminando el producto
+// Escucho el evento de 'productDeleted' proveniente del servidor y actualizo la vista '/' eliminando el producto
 socket.on('productDeleted', (productId) => {
   const productToDelete = document.getElementById(productId);
   if (productToDelete) {
