@@ -39,16 +39,16 @@
               <td>{{this.rol}}</td>             
                 <td>{{this.last_connection}}</td>
                 <td>
-                  <div user-id="{{this._id}}">
+                  <form user-id="{{this._id}}">
                     <button
                       class="modificar-rol-usuario btn btn-secondary"
                     >Modificar</button>
-                  </div>
+                  </form>
                 </td>
                 <td>
-                  <div user-id="{{this._id}}">
+                  <form user-id="{{this._id}}">
                     <button class="eliminar-usuario btn btn-danger">Eliminar</button>
-                  </div>
+                  </form>
                 </td>             
             </tr>
           {{/each}}
@@ -57,11 +57,11 @@
     </div>
   </div>
 </div>
-<div class="text-center">
+<form class="text-center">
     <button
       class="eliminar-usuarios-inactivos btn btn-primary text-decoration text-center"
     >Borrar Usuarios sin Actividad</button>
-</div>
+</form>
 <script src="/js/deleteUser.js"></script>
 <script src="/js/deleteInactiveUsers.js"></script>
 <script src="/js/changeRol.js"></script>
