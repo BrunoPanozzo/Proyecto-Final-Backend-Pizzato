@@ -22,7 +22,7 @@ class UsersServices {
         return await this.dao.getUsers()
     }
 
-    async deleteUser(user){
+    async deleteUser(user) {
         const result = await this.dao.deleteUser(user)
         if (!result) {
             return false
@@ -40,10 +40,13 @@ class UsersServices {
                 to: user.email,
                 subject: 'Cuenta eliminada por inactividad',
                 text: 'Tu cuenta ha sido eliminada debido a la falta de actividad en los últimos 2 días.'
-            }    
+            }
 
-            await transport.sendMail(mailOptions)
-            console.log(`Correo enviado a ${user.email}`)           
+            try {
+                await transport.sendMail(mailOptions)
+                console.log(`Correo enviado a ${user.email}`)
+            } catch (err) {
+            }
         }
 
         return deletedCount
