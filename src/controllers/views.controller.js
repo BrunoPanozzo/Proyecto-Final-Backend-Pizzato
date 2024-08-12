@@ -1,16 +1,19 @@
 const { CartsService } = require('../services/carts.service')
 const { ProductsService } = require('../services/products.service')
+const { UsersService } = require('../services/users.service')
 const { Product: ProductDAO } = require('../dao')
 const { Cart: CartDAO } = require('../dao')
 const { generateProduct } = require('../mock/generateProducts')
 const { CustomError } = require('../services/errors/CustomError')
 const { ErrorCodes } = require('../services/errors/errorCodes')
+const { UserDAO } = require('../dao/mongo/user.dao')
 
 class ViewsController {
 
     constructor() {
         this.cartsService = new CartsService(new CartDAO())
-        this.productsService = new ProductsService(new ProductDAO())       
+        this.productsService = new ProductsService(new ProductDAO()) 
+        this.usersService = new UsersService(new UserDAO())      
     }
 
     home(req, res) {
@@ -253,16 +256,22 @@ class ViewsController {
         }
     }
 
+    generarId () {
+        return new Date().getTime().toString()
+    }
+
     async postRealTimeProducts(req, res) {
         try {              
             const user = req.session.user              
             const product = req.body        
             // Convertir el valor status "true" o "false" a booleano        
-            var boolStatus = JSON.parse(product.status)             
+            var boolStatus = JSON.parse(product.status)  
+            product.id = this.generarId()            
             product.thumbnail = product.thumbnail          
             product.price = +product.price
             product.stock = +product.stock
             await this.productsService.addProduct(
+                product.id,
                 product.title,
                 product.description,
                 +product.price,
@@ -312,6 +321,19 @@ class ViewsController {
             req.logger.error(`${err} - ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`)
             return res.sendServerError(err)
             // return res.status(500).json({ message: err.message })
+        }
+    }   
+    
+    async getUsers(req, res) {
+        try {
+            let listado = []
+
+            listado = await this.usersService.getUsers()     
+                        
+            res.render('admin', { docs: listado })
+           
+        } catch (err) {
+            req.logger.error(`${err} - ${req.method} en ${req.url} - ${new Date().toLocaleDateString()} `);
         }
     }    
 

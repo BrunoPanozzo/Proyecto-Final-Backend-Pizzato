@@ -43,7 +43,9 @@ class ViewsRouter extends Router {
         
         this.get('/mockingproducts', withController((controller, req, res) => controller.mockingPoducts(req, res)))   
         
-        this.get('/loggerTest', withController((controller, req, res) => controller.loggerTest(req, res)))
+        this.get('/loggerTest', withController((controller, req, res) => controller.loggerTest(req, res)))      
+
+        this.get('/users', userIsAdmin, withController((controller, req, res) => controller.getUsers(req, res)))        
     }
 }
 

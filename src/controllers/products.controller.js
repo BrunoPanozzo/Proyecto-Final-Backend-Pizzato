@@ -70,9 +70,9 @@ class ProductsController {
     async addProduct(req, res) {
         try {
             const user = req.session.user
-            const { title, description, price, thumbnail, code, stock, status, category } = req.body
+            const { id, title, description, price, thumbnail, code, stock, status, category } = req.body
             if (user.rol == "admin" || user.rol == "premium") {  // no hace falta porque lo valida el middleware
-                const createdProduct = await this.service.addProduct(title, description, price, thumbnail, code, stock, status, category, user.email)
+                const createdProduct = await this.service.addProduct(id, title, description, price, thumbnail, code, stock, status, category, user.email)
                 //res.sendCreatedSuccess('Producto agregado correctamente')
                 res.sendCreatedSuccess(createdProduct._id)
                 //return res.status(201).json({ success: true })

@@ -8,3 +8,5 @@ error: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to 
 error: MongoServerError: E11000 duplicate key error collection: ecommerce.products index: id_1 dup key: { id: null } - POST en /realtimeproducts - 8/11/2024
 error: MongoServerError: E11000 duplicate key error collection: ecommerce.products index: id_1 dup key: { id: null } - POST en /realtimeproducts - 8/11/2024
 error: MongoServerError: E11000 duplicate key error collection: ecommerce.products index: id_1 dup key: { id: null } - POST en /realtimeproducts - 8/11/2024
+error: TypeError: Cannot read properties of undefined (reading 'getUsers') - GET en /users - 8/12/2024 
+error: TypeError: Cannot read properties of undefined (reading 'getUsers') - GET en /admin - 8/12/2024 

@@ -17,44 +17,39 @@
 </div>
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-12">
       <table class="table table-bordered mt-4 text-center">
         <thead>
-          <tr>
+          <tr class="justify-content-center">
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Email</th>
-            <th>Rol</th>   
-            {{#if mostrarMasInfo}}
-              <th>Ultima conexion</th>
-              <th></th>
-              <th></th>
-            {{/if}}
+            <th>Rol</th>  
+            <th>Ultima conexion</th>
+            <th>Modificar Rol</th>
+            <th>Eliminar Usuario</th>            
           </tr>
         </thead>
         <tbody>
           {{#each docs}}
-            <tr>
+            <tr class="justify-content-center">
               <td>{{this.first_name}}</td>
               <td>{{this.last_name}}</td>
               <td>{{this.email}}</td>
-              <td>{{this.rol}}</td>              
-              {{#if ../mostrarMasInfo}}  
+              <td>{{this.rol}}</td>             
                 <td>{{this.last_connection}}</td>
                 <td>
                   <div user-id="{{this._id}}">
                     <button
                       class="modificar-rol-usuario btn btn-secondary"
-                    >Modificar Rol</button>
+                    >Modificar</button>
                   </div>
                 </td>
                 <td>
                   <div user-id="{{this._id}}">
-                    <button class="eliminar-usuario btn btn-danger">Eliminar
-                      Usuario</button>
+                    <button class="eliminar-usuario btn btn-danger">Eliminar</button>
                   </div>
-                </td>
-              {{/if}}
+                </td>             
             </tr>
           {{/each}}
         </tbody>
@@ -62,14 +57,11 @@
     </div>
   </div>
 </div>
-{{#if mostrarMasInfo}}
-  <div class="text-center">
+<div class="text-center">
     <button
       class="eliminar-usuarios-inactivos btn btn-primary text-decoration text-center"
     >Borrar Usuarios sin Actividad</button>
-  </div>
-{{/if}}
-
+</div>
 <script src="/js/deleteUser.js"></script>
 <script src="/js/deleteInactiveUsers.js"></script>
 <script src="/js/changeRol.js"></script>

@@ -1,10 +1,10 @@
-const { UsersServices } = require('../services/users.service')
+const { UsersService } = require('../services/users.service')
 const { User: UserDAO } = require('../dao')
 
 class UsersController {
 
     constructor() {
-        this.service = new UsersServices(new UserDAO())
+        this.service = new UsersService(new UserDAO())
     }
 
     async changeRole(req, res) {
@@ -36,42 +36,7 @@ class UsersController {
         req.logger.info('Documentación actualizada exitosamente')
         res.sendCreatedSuccess('Documento actualizado de forma correcta')
         //res.status(201).json({ message: 'Documento actualizado de forma correcta' })
-    }
-
-    async getUsers(req, res) {
-        try {
-            let listado = []
-
-            listado = await this.service.getUsers()
-
-            //listado = listado.map(({first_name, last_name, email, rol, last_connection}) => ({first_name, last_name, email, rol, last_connection}))
-
-            if (listado) {
-                res.render('admin', { docs: listado, mostrarMasInfo: false })
-            } else {
-                res.render('admin', { docs: [], mostrarMasInfo: false })
-            }
-        } catch (err) {
-            req.logger.error(`${err} - ${req.method} en ${req.url} - ${new Date().toLocaleDateString()} `);
-        }
-    }
-
-    async admin(req, res) {
-        try {
-            let listado = []
-
-            listado = await this.service.getUsers()
-
-            if (listado) {
-                res.render('admin', { docs: listado, mostrarMasInfo: true })
-            } else {
-                res.render('admin', { docs: [], mostrarMasInfo: true })
-            }
-
-        } catch (err) {
-            req.logger.error(`${err} - ${req.method} en ${req.url} - ${new Date().toLocaleDateString()} `);
-        }
-    }
+    }    
 
     async deleteUser(req, res) {
         const {

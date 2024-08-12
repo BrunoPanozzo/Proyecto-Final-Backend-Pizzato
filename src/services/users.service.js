@@ -1,6 +1,6 @@
 const transport = require('../config/transport')
 
-class UsersServices {
+class UsersService {
 
     constructor(dao) {
         this.dao = dao
@@ -53,4 +53,4 @@ class UsersServices {
     }
 }
 
-module.exports = { UsersServices }
+module.exports = { UsersService }
