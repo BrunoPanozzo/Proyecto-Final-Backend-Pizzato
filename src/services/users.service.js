@@ -40,15 +40,10 @@ class UsersServices {
                 to: user.email,
                 subject: 'Cuenta eliminada por inactividad',
                 text: 'Tu cuenta ha sido eliminada debido a la falta de actividad en los últimos 2 días.'
-            };
+            }    
 
-            try {
-                await transport.sendMail(mailOptions)
-                console.log(`Correo enviado a ${user.email}`)
-            } catch (error) {
-                // console.error(`Error al enviar correo a ${user.email}:`, error);
-                // req.logger.error(`${error} - ${new Date().toLocaleDateString()} `);
-            }
+            await transport.sendMail(mailOptions)
+            console.log(`Correo enviado a ${user.email}`)           
         }
 
         return deletedCount
