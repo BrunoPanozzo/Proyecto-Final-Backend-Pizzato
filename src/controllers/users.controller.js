@@ -10,16 +10,14 @@ class UsersController {
     async changeRole(req, res) {
         try {
             const idUser = req.params.uid            
-            const user = await this.service.changeRole(idUser)
-            if (!user) {
-                return user === false
-                    ? res.sendNotFoundError(`El usuario '${idUser}' no existe`)
-                    : res.sendServerError(`No se pudo cambiar el rol del usuario '${idUser}'`)
+            const user = await this.service.changeRole(idUser)     
+            if (!user) {                       
+                return res.sendServerError(`No se pudo cambiar el rol del usuario '${idUser}'`)
             }
 
-            res.sendSuccess(`El usuario '${idUser}' cambió su rol'`)
+            return res.sendSuccess(`El usuario '${idUser}' cambió su rol'`)
         }
-        catch (err) {
+        catch (err) {            
             res.sendServerError(err)
         }
     }

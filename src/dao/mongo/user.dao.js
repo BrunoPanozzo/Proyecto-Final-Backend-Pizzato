@@ -104,7 +104,7 @@ class UserDAO {
                 const hasRequiredDocuments = requiredDocuments.every(doc => user.documents.some(d => (d.name).includes(doc)))
                 //const hasRequiredDocuments = requiredDocuments.every(doc => user.documents.some(d => d.name === doc))
                 // Para cada documento en requiredDocuments, se ejecuta una función que verifica si hay al menos un documento en user.documents que tenga un name igual al nombre del documento actual (doc)
-                if (user.rol == 'user') {
+                if (user.rol == 'user') {                    
                     if (!hasRequiredDocuments) {
                         console.error('El usuario no ha terminado de procesar su documentacion')
                         return false
