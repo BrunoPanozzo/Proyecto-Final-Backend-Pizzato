@@ -151,10 +151,10 @@ class ProductsController {
                 try {
                     await transport.sendMail(mailOptions)
                     console.log(`Correo enviado a ${email}`)
-                } catch (error) {
-                    res.sendUserError(err)
+                } catch (err) {
+                    //res.sendUserError(err)
                 }
-            }
+            }          
             await this.service.deleteProduct(prodId)            
             return res.sendSuccess('Producto Eliminado correctamente')
             // return res.status(200).json({ message: "Producto Eliminado correctamente" })    // HTTP 200 OK
