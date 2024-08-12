@@ -1,5 +1,6 @@
 const { UsersService } = require('../services/users.service')
 const { User: UserDAO } = require('../dao')
+const config = require('../config/config')
 
 class UsersController {
 
@@ -46,7 +47,7 @@ class UsersController {
         if (esBorrado) {
             if (email) {
                 let result = await transport.sendMail({
-                    from: 'Administrador Coder <verizzato@gmail.com>',
+                    from: config.ADMIN_EMAIL,
                     to: `${email}`,
                     subject: 'Su Usuario fue Eliminado por el Administrador',
                     html: `<div> <h1> Su Usuario fue eliminado por el Administrador de Coder. </h1></div>`,

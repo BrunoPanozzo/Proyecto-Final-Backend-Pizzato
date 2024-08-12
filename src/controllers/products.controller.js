@@ -2,6 +2,7 @@ const { ProductsService } = require('../services/products.service')
 const { Product: ProductDAO } = require('../dao')
 const { ProductDTO } = require('../dao/DTOs/product.dto')
 const transport = require("../config/transport")
+const config = require('../config/config')
 
 class ProductsController {
 
@@ -143,10 +144,10 @@ class ProductsController {
             if (req.session.user.rol === 'premium') {               
                 // Enviar correo electrónico al usuario premium por el producto eliminado 
                 const mailOptions = {
-                    from: 'Administrador Coder <verizzato@gmail.com>',
+                    from: config.ADMIN_EMAIL,
                     to: req.session.user.email,  // es igual a producto.owner
-                    subject: 'Ha sido eliminado un producto',
-                    text: 'Un producto cargado por Ud. ha sido eliminado por el administrador.'
+                    subject: 'Ha sido eliminado un producto de un usuario PREMIUM',
+                    text: 'Se ha eliminado un producto creado por Ud.'
                 }
                 try {
                     await transport.sendMail(mailOptions)
