@@ -23,9 +23,9 @@ const soloNumPositivosYcero = (code) => {
 }
 
 const validarDatos = (title, description, price, thumbnail, code, stock, status, category) => {
-    if (!title || !description || !price || !thumbnail || !code || !stock || !status || !category) {
+    if (!title || !description || !price || !thumbnail || !code || !stock || !category) {
         return false
-    }   
+    }
     if (isNaN(price) || isNaN(stock)) {
         return false
     }
@@ -35,39 +35,39 @@ const validarDatos = (title, description, price, thumbnail, code, stock, status,
     if (!soloNumPositivosYcero(stock)) {
         return false
     }
-   
-    if (!Array.isArray(thumbnail)) {       
+
+    if (!Array.isArray(thumbnail)) {
         return false
     }
-    else {       
+    else {
         let rutasValidas = true
         thumbnail.forEach(ruta => {
             if (typeof ruta != "string") {
                 rutasValidas = false
                 return
             }
-        })        
-        if (!rutasValidas) {            
+        })
+        if (!rutasValidas) {
             return false
         }
-    }  
-    if (!soloNumYletras(code)) {       
+    }
+    if (!soloNumYletras(code)) {
         return false
     }
-    
+
     var boolStatus = status
-    if (typeof boolStatus != "boolean") {       
+    if (typeof boolStatus != "boolean") {
         return false
     }
-    
+
     return true
 }
 
 // Middleware para validacion de datos al agregar un producto 
-const validarNuevoProducto = async (req, res, next) => { 
-    const product = req.body    
+const validarNuevoProducto = async (req, res, next) => {   
+    const product = req.body
     product.price = +product.price
-    product.stock = +product.stock  
+    product.stock = +product.stock
     product.status = JSON.parse(product.status)
 
     const title = product.title
@@ -77,11 +77,11 @@ const validarNuevoProducto = async (req, res, next) => {
     const code = product.code
     const stock = product.stock
     const status = product.status
-    const category = product.category     
-       
-    try {       
+    const category = product.category
+  
+    try {
         if (validarDatos(title, description, price, thumbnail, code, stock, status, category)) {
-            const prod = await productsService.getProductByCode(product.code) 
+            const prod = await productsService.getProductByCode(product.code)
             if (prod) {
                 // res.status(400).json({ error: "Codigo ya existente" })
                 // return
@@ -105,7 +105,7 @@ const validarNuevoProducto = async (req, res, next) => {
                 status,
                 thumbnail,
                 code,
-                stock                
+                stock
             }),
             message: 'Error trying to create a new product',
             code: ErrorCodes.INVALID_TYPES_ERROR
@@ -123,7 +123,7 @@ const validarNuevoProducto = async (req, res, next) => {
                 status,
                 thumbnail,
                 code,
-                stock                
+                stock
             }),
             message: 'Error trying to create a new product',
             code: ErrorCodes.INVALID_TYPES_ERROR
@@ -146,20 +146,20 @@ const validarProdActualizado = async (req, res, next) => {
     const status = product.status
     const category = product.category
     const owner = product.owner
-    try {     
-        const prod = await productsService.getProductById(idProd)    
-        if (!prod){
+    try {
+        const prod = await productsService.getProductById(idProd)
+        if (!prod) {
             throw CustomError.createError({
                 name: 'ProductNotFound',
                 cause: `No existe el producto`,
                 message: 'Error trying to get a product',
                 code: ErrorCodes.NOT_FOUND
             })
-        } 
-        if (validarDatos(title, description, price, thumbnail, code, stock, status, category, owner)) {                       
-            const listadoProductos = await productsService.getProducts(req.query)            
+        }
+        if (validarDatos(title, description, price, thumbnail, code, stock, status, category, owner)) {
+            const listadoProductos = await productsService.getProducts(req.query)
             let producto = listadoProductos.docs.find(element => ((element.code === product.code) && (element._id != idProd)))
-            if (producto) {               
+            if (producto) {
                 // res.status(400).json({ error: "Codigo ya existente" })
                 // return
                 throw CustomError.createError({
@@ -168,10 +168,10 @@ const validarProdActualizado = async (req, res, next) => {
                     message: 'Error trying to create a new product',
                     code: ErrorCodes.INVALID_TYPES_ERROR
                 })
-            }              
-           
+            }
+
             next()
-        }   
+        }
         throw CustomError.createError({
             name: 'InvalidProductData',
             cause: generateProductErrorInfo({
@@ -182,7 +182,7 @@ const validarProdActualizado = async (req, res, next) => {
                 status,
                 thumbnail,
                 code,
-                stock                
+                stock
             }),
             message: 'Error trying to create a new product',
             code: ErrorCodes.INVALID_TYPES_ERROR
@@ -200,7 +200,7 @@ const validarProdActualizado = async (req, res, next) => {
                 status,
                 thumbnail,
                 code,
-                stock                
+                stock
             }),
             message: 'Error trying to create a new product',
             code: ErrorCodes.INVALID_TYPES_ERROR
@@ -210,13 +210,13 @@ const validarProdActualizado = async (req, res, next) => {
 
 // Middleware para validacion de datos de un producto 
 const validarProductoExistente = async (req, res, next) => {
-    try {      
-        let prodId = req.params.pid        
+    try {
+        let prodId = req.params.pid
         // if (isNaN(prodId)) {
         //     res.status(400).json({ error: "Formato invalido." })
         //     return
         // }
-        const producto = await productsService.getProductById(prodId)       
+        const producto = await productsService.getProductById(prodId)
         if (!producto) {
             throw CustomError.createError({
                 name: 'ProductNotFound',
@@ -227,7 +227,7 @@ const validarProductoExistente = async (req, res, next) => {
             // return producto === false
             //     ? res.status({ message: 'Not found!' }, 404)                 
             //     : res.status({ message: 'Something went wrong!' })
-        }        
+        }
         next()
     }
     catch {
