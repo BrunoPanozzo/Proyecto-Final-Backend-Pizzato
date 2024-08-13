@@ -103,18 +103,19 @@ class ProductsController {
                     ? res.sendNotFoundError({ message: 'Not found!' }, 404)
                     : res.sendServerError({ message: 'Something went wrong!' })
             }
-            if ((!req.session.user && req.session.user.rol !== 'admin') ||
-                (!req.session.user && req.session.user.email !== producto.owner)) {
+            if ((req.session.user.rol == 'admin') || (req.session.user.rol == 'premium') && (req.session.user.email == producto.owner)) {
+                const result = this.service.updateProduct(prodId, datosAUpdate)
+                //return res.sendSuccess(result)
+                //return res.status(200).json(result)
+                return res.sendSuccess(new ProductDTO(datosAUpdate))
+            }
+            else {
                 req.logger.error(`${error} - ${req.method} en ${req.url} - ${new Date().toLocaleDateString()} `);
                 return res.send({
                     status: "Error",
                     error: 'No autorizado'
-                });
+                })
             }
-            const result = this.service.updateProduct(prodId, datosAUpdate)
-            //return res.sendSuccess(result)
-            //return res.status(200).json(result)
-            return res.sendSuccess(new ProductDTO(datosAUpdate))
         } catch (err) {
             req.logger.error(`${err} - ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`)
             res.sendUserError(err)
@@ -126,38 +127,40 @@ class ProductsController {
 
     async deleteProduct(req, res) {
         try {
-            const prodId = req.pid            
-            const producto = await this.service.getProductById(prodId)           
+            const prodId = req.pid
+            const producto = await this.service.getProductById(prodId)
             if (!producto) {
                 return producto === false
                     ? res.sendNotFoundError({ message: 'Not found!' }, 404)
                     : res.sendServerError({ message: 'Something went wrong!' })
             }
-            if ((!req.session.user && req.session.user.rol !== 'admin') ||
-                (!req.session.user && req.session.user.email !== producto.owner)) {
+
+            if ((req.session.user.rol == 'admin') || (req.session.user.rol == 'premium') && (req.session.user.email == producto.owner)) {
+                if (req.session.user.rol === 'premium') {
+                    // Enviar correo electrónico al usuario premium por el producto eliminado 
+                    const mailOptions = {
+                        from: config.ADMIN_EMAIL,
+                        to: req.session.user.email,  // es igual a producto.owner
+                        subject: 'Ha sido eliminado un producto de un usuario PREMIUM',
+                        text: 'Se ha eliminado un producto creado por Ud.'
+                    }
+                    try {
+                        await transport.sendMail(mailOptions)
+                        console.log(`Correo enviado a ${email}`)
+                    } catch (err) {
+                    }
+                }
+                await this.service.deleteProduct(prodId)
+                return res.sendSuccess('Producto Eliminado correctamente')
+                // return res.status(200).json({ message: "Producto Eliminado correctamente" })    // HTTP 200 OK
+            }
+            else {
                 req.logger.error(`${error} - ${req.method} en ${req.url} - ${new Date().toLocaleDateString()} `)
                 return res.send({
                     status: "Error",
                     error: 'No autorizado'
                 })
             }
-            if (req.session.user.rol === 'premium') {               
-                // Enviar correo electrónico al usuario premium por el producto eliminado 
-                const mailOptions = {
-                    from: config.ADMIN_EMAIL,
-                    to: req.session.user.email,  // es igual a producto.owner
-                    subject: 'Ha sido eliminado un producto de un usuario PREMIUM',
-                    text: 'Se ha eliminado un producto creado por Ud.'
-                }
-                try {
-                    await transport.sendMail(mailOptions)
-                    console.log(`Correo enviado a ${email}`)
-                } catch (err) {                  
-                }
-            }          
-            await this.service.deleteProduct(prodId)            
-            return res.sendSuccess('Producto Eliminado correctamente')
-            // return res.status(200).json({ message: "Producto Eliminado correctamente" })    // HTTP 200 OK
         }
         catch (err) {
             req.logger.error(`${err} - ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`)

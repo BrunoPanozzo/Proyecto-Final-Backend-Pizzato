@@ -120,7 +120,7 @@ class CartsController {
             res.status(200).json(`Los productos del carrito con ID ${cartId} se actualizaron exitosamente.`)
         }
         catch (err) {
-            error(`${err} - ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`)
+            req.logger.erro(`${err} - ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`)
             return res.sendServerError(err)
             // return res.status(500).json({ message: err.message })
         }
