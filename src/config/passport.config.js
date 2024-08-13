@@ -182,8 +182,7 @@ const initializeStrategy = () => {
             user = await UserDAO.findByEmail({ email: username })    
         
             // 1. verificar que el usuario exista en la BD           
-            if (!user) {
-                console.log("User doesn't exist")
+            if (!user) {                
                 return done(null, false, "User doesn't exist");
             }
 
