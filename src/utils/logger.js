@@ -36,13 +36,13 @@ const devLogger = winston.createLogger({
 const prodLogger = winston.createLogger({
     levels: customLevelsOptions.levels,
     transports: [
-        new winston.transports.Console({
+        new winston.transports.Console({           
             level: 'info',
             format: winston.format.combine(
                 winston.format.colorize({ colors: customLevelsOptions.colors }),
                 winston.format.simple()
             )
-        }),
+        }),        
         new winston.transports.File({
             filename: './errors.log',
             level: 'error',

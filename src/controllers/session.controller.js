@@ -27,10 +27,10 @@ class SessionController {
             req.session.user = new UserDTO(req.user)
             //req.session.user = { _id: req.user._id, first_name: req.user.first_name, last_name: req.user.last_name, age: req.user.age, email: req.user.email, rol: req.user.rol, cart: req.user.cart }
             //res.sendSuccess(req.user._id)
-            // res.status(200).send({
-            //     message: 'Logueo exitoso'
-            // })
+            req.logger.info('Logueo exitoso')
+            res.status(200)
             res.redirect('/products')
+            //res.redirect(200, '/products')
         }
         catch (err) {
             console.log(err)
@@ -57,6 +57,8 @@ class SessionController {
                 // res.status(200).send({
                 //     message: 'Sesión cerrada exitosamente'
                 // })
+                req.logger.info('El usuario se deslogueo exitosamente')
+                res.status(200)
                 res.redirect('/')
             })
         }
