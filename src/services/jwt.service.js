@@ -60,8 +60,9 @@ class JwtServices {
         return await this.dao.findByEmail({ email })
     }
 
-    async getUserByEmail(email) {     
-        if (email == config.ADMIN_EMAIL) {
+    async getUserByEmail(email) {  
+        //if (email == config.ADMIN_EMAIL) {   
+        if (email == 'admin') {
             let user = {
                 first_name: "Usuario",
                 last_name: "de CODER",

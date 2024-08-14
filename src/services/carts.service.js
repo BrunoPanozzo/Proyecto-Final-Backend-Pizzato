@@ -29,8 +29,8 @@ class CartsService {
             return false       
         const userOwner = await this.jwtServices.getUserByEmail(product.owner)  
         if (!userOwner)
-            return false       
-        const userCart = await this.jwtServices.getUserByCartId(cartId)         
+            return false                            
+        const userCart = await this.jwtServices.getUserByCartId(cartId)                 
         if (!userCart)
             return false      
         if ((userCart.email == userOwner.email) && (userCart.rol == "premium"))

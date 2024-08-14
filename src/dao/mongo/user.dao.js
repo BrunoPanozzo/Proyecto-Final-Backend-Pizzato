@@ -16,7 +16,7 @@ class UserDAO {
 
     getUserByEmail = async (email) => {
         try {
-            const user = await UserModel.findOne({ email })
+            const user = await UserModel.findOne({ email })           
             return user?.toObject() ?? null
         }
         catch (err) {
