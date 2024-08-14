@@ -71,6 +71,7 @@ app.engine("handlebars", handlebars.engine)
 app.set("views", `${__dirname}/views`)
 app.set("view engine", "handlebars")
 
+app.use('/products', express.static(`${__dirname}/../public`));
 app.use('/products/detail', express.static(`${__dirname}/../public`));  // para encontrar la carpeta public
 app.use('/products/addCart', express.static(`${__dirname}/../public`));  // para encontrar la carpeta public
 app.use('/carts', express.static(`${__dirname}/../public`));

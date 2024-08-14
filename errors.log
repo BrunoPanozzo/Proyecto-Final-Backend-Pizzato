@@ -1,1 +1,1 @@
-error: undefined {"code":"EAUTH","command":"AUTH PLAIN","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-2d3ac8218e5sm1800123a91.51 - gsmtp","responseCode":535}
+error: MulterErrorPOST en /api/users/66bcc201531ba2b3590d3710/documents - 8/14/2024
