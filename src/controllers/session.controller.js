@@ -21,9 +21,9 @@ class SessionController {
             //console.log(req.user)                      
             const email = req.body.email
             if (req.user.rol != "admin" && req.user.rol != "superadmin") {
-                req.user.last_connection = Date.now()              
+                req.user.last_connection = Date.now()
                 await this.service.updateLastConnection(email, req.user.last_connection)
-            }        
+            }
             req.session.user = new UserDTO(req.user)
             //req.session.user = { _id: req.user._id, first_name: req.user.first_name, last_name: req.user.last_name, age: req.user.age, email: req.user.email, rol: req.user.rol, cart: req.user.cart }
             //res.sendSuccess(req.user._id)
@@ -49,20 +49,27 @@ class SessionController {
 
     async logout(req, res) {
         try {
-            const email = req.body.email
-            if (req.user.rol != "admin" && req.user.rol != "superadmin") {
-                req.user.last_connection = Date.now()              
-                await this.service.updateLastConnection(email, req.user.last_connection)
-            }            
-            req.session.destroy(_ => {
-                //res.sendSuccess(req.user._id)
-                // res.status(200).send({
-                //     message: 'Sesión cerrada exitosamente'
-                // })
-                req.logger.info(`El usuario '${req.user.email}' se deslogueó exitosamente`)
+            if (req.session.user) {
+                const email = req.body.email
+                if (req.user.rol != "admin" && req.user.rol != "superadmin") {
+                    req.user.last_connection = Date.now()
+                    await this.service.updateLastConnection(email, req.user.last_connection)
+                }
+                req.session.destroy(_ => {
+                    //res.sendSuccess(req.user._id)
+                    // res.status(200).send({
+                    //     message: 'Sesión cerrada exitosamente'
+                    // })
+                    req.logger.info(`El usuario '${req.user.email}' se deslogueó exitosamente`)
+                    res.status(200)
+                    res.redirect('/')
+                })
+            }
+            else {
+                req.logger.info('El usuario ya cerro su sesión')
                 res.status(200)
                 res.redirect('/')
-            })
+            }
         }
         catch (err) {
             //return res.status(500).json({ message: err.message })
@@ -113,7 +120,7 @@ class SessionController {
             const result = await this.service.validarPassRepetidos(email, password)
             if (result) {
                 req.logger.info('Contraseña inválida, la nueva contraseña no puede ser igual a la contraseña anterior')
-                res.status(400)                
+                res.status(400)
                 return res.redirect('/')
             }
 

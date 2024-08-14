@@ -13,22 +13,7 @@ const withController = callback => {
 class UsersRouter extends Router {
     init() {
 
-        this.put('/premium/:uid', withController((controller, req, res) => controller.changeRole(req, res)))
-
-        // this.post('/:uid/documents', uploader.fields([
-        //     {
-        //         name: 'profile',
-        //         maxCount: 1
-        //     },
-        //     {
-        //         name: 'product',
-        //         maxCount: 1
-        //     },
-        //     {
-        //         name: 'document',
-        //         maxCount: 1
-        //     }
-        // ]), withController((controller, req, res) => controller.uploadDocuments(req, res)))
+        this.put('/premium/:uid', withController((controller, req, res) => controller.changeRole(req, res)))       
 
         this.post('/:uid/documents', uploader.array('documents'), withController((controller, req, res) => controller.uploadDocuments(req, res)))
 

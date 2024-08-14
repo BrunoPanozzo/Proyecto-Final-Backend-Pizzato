@@ -106,11 +106,15 @@ class ViewsController {
         try {
             let products = await this.productsService.getProducts(req.query)
             let user = req.session.user
+            let isAdmin = ['admin'].includes(req.session.user.rol)
+            let isPremium = ['premium'].includes(req.session.user.rol)                
             res.render('home', {
                 title: 'Home',
                 styles: ['styles.css'],
                 products,
-                user
+                user,
+                isAdmin,
+                isPremium
             })
         } catch (err) {
             req.logger.error(`${err} - ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`)
