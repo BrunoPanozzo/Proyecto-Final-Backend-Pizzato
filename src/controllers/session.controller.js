@@ -28,7 +28,7 @@ class SessionController {
             //req.session.user = { _id: req.user._id, first_name: req.user.first_name, last_name: req.user.last_name, age: req.user.age, email: req.user.email, rol: req.user.rol, cart: req.user.cart }
             //res.sendSuccess(req.user._id)
             req.logger.info(`Logueo exitoso de '${req.user.email}'`)
-            res.status(200).json(`Logueo exitoso de '${req.user.email}'`)
+            res.status(200)
             res.redirect('/products')
             //res.redirect(200, '/products')
         }
@@ -41,7 +41,7 @@ class SessionController {
 
     faillogin(req, res) {
         req.logger.warning(`Usuario no existe o password incorrecto - ${req.method} en ${req.url} - ${new Date().toLocaleDateString()}`)
-        res.status(401).json('Usuario no existe o password incorrecto')
+        res.status(401)
         res.redirect('/')
         //res.sendUnauthorized('Login failed!')
         //res.send({ status: 'error', message: 'Login failed!' })
@@ -60,7 +60,7 @@ class SessionController {
                 //     message: 'Sesión cerrada exitosamente'
                 // })
                 req.logger.info(`El usuario '${req.user.email}' se deslogueó exitosamente`)
-                res.status(200).json(`El usuario '${req.user.email}' se deslogueó exitosamente`)
+                res.status(200)
                 res.redirect('/')
             })
         }
@@ -75,7 +75,7 @@ class SessionController {
             //console.log(req.body)
             // no es necesario registrar el usuario aquí, ya lo hacemos en la estrategia!
             req.logger.info(`El usuario '${req.user.email}' se registró exitosamente`)
-            res.status(200).json(`El usuario '${req.user.email}' se registró exitosamente`)
+            res.status(200)
             res.redirect('/login')
             //res.sendSuccess(`El usuario '${req.user.email}' se registró exitosamente.`)
         }
@@ -88,7 +88,7 @@ class SessionController {
     failregister(req, res) {
         req.logger.info(`Failed register - ${req.method} en ${req.url} - ${new Date().toLocaleDateString()} `);
         //res.sendUserError('Register failed!')
-        res.status(400).json('Failed register!')
+        res.status(400)
         res.redirect('/')
         //res.send({ status: 'error', message: 'Register failed!' })
     }
@@ -99,26 +99,26 @@ class SessionController {
         //console.log(email + " " + password)
         if (!token) {
             req.logger.info('Token no proporcionado')
-            return res.status(401).json('Token no proporcionado')
+            return res.status(401)
             //return res.status(401).send('Token no proporcionado')
         }
 
         jwt.verify(token, SECRET, async (err, decoded) => {
             if (err) {
                 req.logger.info('Token no válido o ha expirado')
-                res.status(400).json('Token no válido o ha expirado')
+                res.status(400)
                 return res.redirect('/forget_password')
             }
 
             const result = await this.service.validarPassRepetidos(email, password)
             if (result) {
                 req.logger.info('Contraseña inválida, la nueva contraseña no puede ser igual a la contraseña anterior')
-                res.status(400).json('Contraseña inválida, la nueva contraseña no puede ser igual a la contraseña anterior')
+                res.status(400)                
                 return res.redirect('/')
             }
 
             req.logger.info('Contraseña actualizada')
-            res.status(200).json('Contraseña actualizada')
+            res.status(200)
             res.redirect('/login')
         })
     }
@@ -143,14 +143,14 @@ class SessionController {
 
                 // Si el envío de correo fue exitoso
                 req.logger.info('Correo enviado con éxito')
-                res.status(200).json('Correo enviado con éxito')
+                res.status(200)
                 // res.status(200).json({
                 //     message: 'Correo enviado con éxito'
                 // })
 
             } catch (err) {
                 req.logger.error(err)
-                res.status(500).json('Error al enviar el correo')
+                res.status(500)
                 // console.error('Error al enviar el correo:', err)
                 // res.status(500).json({
                 //     err: 'Error al enviar el correo'
@@ -158,7 +158,7 @@ class SessionController {
             }
         } else {
             req.logger.info('Correo electrónico no proporcionado')
-            res.status(400).json('Correo electrónico no proporcionado')
+            res.status(400)
             // res.status(400).json({
             //     err: 'Correo electrónico no proporcionado'
             // })
