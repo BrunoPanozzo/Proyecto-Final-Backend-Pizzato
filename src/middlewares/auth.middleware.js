@@ -26,9 +26,16 @@ module.exports = {
         next()
     },
     userIsUser: (req, res, next) => {
-        // el usuario debe ser user o superadmin    
+        // el usuario debe ser user o superadmin o premium    
         if (req.session.user.rol != "user" && req.session.user.rol != "superadmin")  {        
             return res.status(403).json({ error: 'Unauthorized user!' })
+        }
+
+        next()
+    },
+    userIsUserOrPremium: (req, res, next) => {
+        if ((req.session.user.rol != "user") && (req.session.user.rol != "premium")) {
+            return res.status(403).json({ error: 'El usuario debe tener permisos de admin o premium!' })
         }
 
         next()

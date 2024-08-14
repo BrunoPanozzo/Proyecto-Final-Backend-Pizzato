@@ -1,2 +1,5 @@
 
+error: InvalidAction: Error trying to add a product to a cart - GET en /products/addCart/660c2e0ceae06b4c3ff95021 - 8/14/2024
 error: InvalidAction: Error trying to add a product to a cart - GET en /products/addCart/660c2deeeae06b4c3ff9501f - 8/14/2024
+error: InvalidAction: Error trying to add a product to a cart - GET en /products/addCart/660c2deeeae06b4c3ff9501f - 8/14/2024
+error: ErrorGET en /products/detail/660c2e0ceae06b4c3ff95021 - 8/14/2024

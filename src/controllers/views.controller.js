@@ -12,8 +12,8 @@ class ViewsController {
 
     constructor() {
         this.cartsService = new CartsService(new CartDAO())
-        this.productsService = new ProductsService(new ProductDAO()) 
-        this.usersService = new UsersService(new UserDAO())      
+        this.productsService = new ProductsService(new ProductDAO())
+        this.usersService = new UsersService(new UserDAO())
     }
 
     home(req, res) {
@@ -107,7 +107,7 @@ class ViewsController {
             let products = await this.productsService.getProducts(req.query)
             let user = req.session.user
             let isAdmin = ['admin'].includes(req.session.user.rol)
-            let isPremium = ['premium'].includes(req.session.user.rol)                
+            let isPremium = ['premium'].includes(req.session.user.rol)
             res.render('home', {
                 title: 'Home',
                 styles: ['styles.css'],
@@ -134,7 +134,9 @@ class ViewsController {
                     : res.sendServerError({ message: 'Something went wrong!' })
             }
             const carts = await this.cartsService.getCarts()
-            let cid = user.cart //carts[0]._id          
+            let cid = user.cart //carts[0]._id    
+            let isAdmin = ['admin'].includes(req.session.user.rol)
+            let isNotAdmin = !isAdmin
             let data = {
                 title: 'Product Detail',
                 scripts: ['productoDetail.js'],
@@ -142,7 +144,8 @@ class ViewsController {
                 styles: ['productos.css'],
                 useWS: false,
                 cid,
-                product
+                product,
+                isNotAdmin
             }
             res.render('detailProduct', data)
         } catch (err) {
@@ -155,14 +158,14 @@ class ViewsController {
     async addProductToCart(req, res) {
         try {
             const prodId = req.pid
-            const user = req.session.user                      
-            const product = await this.productsService.getProductById(prodId)          
+            const user = req.session.user
+            const product = await this.productsService.getProductById(prodId)
             if (!product) {
                 return res.sendNotFoundError(`El producto con código '${prodId}' no existe!`)
             }
             // agrego una unidad del producto al carrito del usuario
             let quantity = 1
-            const result = await this.cartsService.addProductToCart(user.cart, prodId, quantity)             
+            const result = await this.cartsService.addProductToCart(user.cart, prodId, quantity)
             if (result) {
                 //res.sendSuccess(`Se agregaron ${quantity} producto/s con ID ${prodId} al carrito con ID ${user.cart}!`)
                 this.mostrarAlertaCompra(res, user.cart, product)
@@ -260,18 +263,18 @@ class ViewsController {
         }
     }
 
-    generarId () {
+    generarId() {
         return new Date().getTime().toString()
     }
 
     async postRealTimeProducts(req, res) {
-        try {              
-            const user = req.session.user              
-            const product = req.body        
+        try {
+            const user = req.session.user
+            const product = req.body
             // Convertir el valor status "true" o "false" a booleano        
-            var boolStatus = JSON.parse(product.status)  
-            product.id = this.generarId()            
-            product.thumbnail = product.thumbnail          
+            var boolStatus = JSON.parse(product.status)
+            product.id = this.generarId()
+            product.thumbnail = product.thumbnail
             product.price = +product.price
             product.stock = +product.stock
             await this.productsService.addProduct(
@@ -326,20 +329,20 @@ class ViewsController {
             return res.sendServerError(err)
             // return res.status(500).json({ message: err.message })
         }
-    }   
-    
+    }
+
     async getUsers(req, res) {
         try {
             let listado = []
 
-            listado = await this.usersService.getUsers()     
-                        
+            listado = await this.usersService.getUsers()
+
             res.render('admin', { docs: listado })
-           
+
         } catch (err) {
             req.logger.error(`${err} - ${req.method} en ${req.url} - ${new Date().toLocaleDateString()} `);
         }
-    }    
+    }
 
     mockingPoducts(req, res) {
         const products = []
