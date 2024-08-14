@@ -20,25 +20,27 @@
 
 .container {
     display: flex;
-    justify-content: flex-end; /* Alinea los elementos a la derecha */
-    align-items: center; /* Centra verticalmente los elementos */
+    justify-content: flex-end;
+    /* Alinea los elementos a la derecha */
+    align-items: center;
+    /* Centra verticalmente los elementos */
 }
 
 .user-session,
 .logout {
     display: inline-block;
     vertical-align: top;
-    margin-left: 20px;    
+    margin-left: 20px;
 }
 
 .user-session {
-    float: left;   
-    text-align: right;    
-    color: blue;    
+    float: left;
+    text-align: right;
+    color: blue;
 }
 
 .logout {
-    float: right;    
+    float: right;
 }
 
 .divEncabezado {
@@ -49,4 +51,8 @@
     background-color: rgba(153, 217, 234);
     border-radius: 2px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.custom-margin {
+    margin-right: 5px;
 }

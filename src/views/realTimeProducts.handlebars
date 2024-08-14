@@ -1,10 +1,10 @@
 <h1 class="text-center">Listado de Productos en Tiempo Real</h1>
 <div class="container">
-      <a href="/newProduct">
-        <button type="submit" class="btn btn-primary mb-3 my-5">Agregar Producto</button>
-      </a>      
-      <button onclick="history.back()" class="btn btn-primary mb-3 my-5">Volver</button>      
-    </div>
+  <a href="/newProduct" class="custom-margin">
+    <button type="submit" class="btn btn-primary mr-3">Agregar Producto</button>
+  </a>
+  <button onclick="history.back()" class="btn btn-primary">Volver</button>
+</div>
 <div class="container my-2 mx-auto text-center" id="productsFeed">
   <div class="row">
     {{#each products.docs}}
@@ -21,17 +21,11 @@
     {{/each}}
     <div class="card-body">
       {{#if products.hasPrevPage}}
-        <a
-          href="/products?page={{products.prevPage}}"
-          class="btn btn-primary text-center"
-        >Pagina Anterior</a>
+      <a href="/products?page={{products.prevPage}}" class="btn btn-primary text-center">Pagina Anterior</a>
       {{/if}}
       <p class="text-center"><strong>{{products.page}}</strong></p>
       {{#if products.hasNextPage}}
-        <a
-          href="/products?page={{products.nextPage}}"
-          class="btn btn-primary text-center"
-        >Pagina Siguiente</a>
+      <a href="/products?page={{products.nextPage}}" class="btn btn-primary text-center">Pagina Siguiente</a>
       {{/if}}
     </div>
   </div>
