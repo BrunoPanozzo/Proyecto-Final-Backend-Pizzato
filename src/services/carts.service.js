@@ -24,10 +24,10 @@ class CartsService {
     }
 
     async addProductToCart (cartId, prodId, quantity) { 
-        const product = await this.productsService.getProductById(prodId)         
+        const product = await this.productsService.getProductById(prodId)                 
         if (!product)
             return false       
-        const userOwner = await this.jwtServices.getUserByEmail(product.owner)     
+        const userOwner = await this.jwtServices.getUserByEmail(product.owner)  
         if (!userOwner)
             return false       
         const userCart = await this.jwtServices.getUserByCartId(cartId)         
