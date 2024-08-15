@@ -18,17 +18,17 @@ const JwtStrategy = Strategy
 const cookieExtractor = req => req && req.cookies ? req.cookies['accessToken'] : null
 
 const initializeStrategy = () => {
-    const secret = config.SECRET || 'aflakdgSAlsdgakfaklgavglKF'
-    passport.use('jwt', new JwtStrategy({
-        jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
-        secretOrKey: config.SECRET
-    }, async (jwtPayload, done) => {
-        try {
-            return done(null, jwtPayload.user)  // req.user
-        } catch (err) {
-            done(err)
-        }
-    }))
+    // const secret = config.SECRET || 'aflakdgSAlsdgakfaklgavglKF'
+    // passport.use('jwt', new JwtStrategy({
+    //     jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+    //     secretOrKey: config.SECRET
+    // }, async (jwtPayload, done) => {
+    //     try {
+    //         return done(null, jwtPayload.user)  // req.user
+    //     } catch (err) {
+    //         done(err)
+    //     }
+    // }))
 
     passport.use('github', new GithubStrategy({
         clientID: config.CLIENT_ID,
