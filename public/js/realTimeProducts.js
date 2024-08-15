@@ -29,7 +29,7 @@ socket.on('productDeleted', (productId) => {
   const productToDelete = document.getElementById(productId);
   if (productToDelete) {
     // Llamar al endpoint de eliminación de productos 
-    fetch(`http://localhost:8080/api/products/${productId}`, {
+    fetch(`/api/products/${productId}`, {
       method: 'DELETE'
     })
     //productToDelete.remove();
