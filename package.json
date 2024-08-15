@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "test": "mocha test --recursive"
+    "test": "mocha test --recursive",
+    "local": "node --env-file=.env src/app.js" 
   },
   "author": "Vero",
   "license": "ISC",
