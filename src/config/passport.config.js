@@ -29,7 +29,6 @@ const initializeStrategy = () => {
             done(err)
         }
     }))
-
     
     const url = process.env.ENVIRONMENT === 'production'
     ? process.env.DEPLOY_URL
