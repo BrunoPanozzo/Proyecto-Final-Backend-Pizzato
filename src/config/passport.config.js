@@ -30,6 +30,7 @@ const initializeStrategy = () => {
         }
     }))
 
+    
     const url = process.env.ENVIRONMENT === 'production'
     ? process.env.DEPLOY_URL
     : 'localhost'
