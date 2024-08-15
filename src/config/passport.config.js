@@ -18,7 +18,7 @@ const JwtStrategy = Strategy
 const cookieExtractor = req => req && req.cookies ? req.cookies['accessToken'] : null
 
 const initializeStrategy = () => {
-
+    const secret = config.SECRET || 'aflakdgSAlsdgakfaklgavglKF'
     passport.use('jwt', new JwtStrategy({
         jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
         secretOrKey: config.SECRET
