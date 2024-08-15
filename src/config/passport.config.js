@@ -30,10 +30,13 @@ const initializeStrategy = () => {
         }
     }))
 
+    const clientID = config.CLIENT_ID || 'Iv1.837ae01fd44b8a61'
+    const clientSecret = config.CLIENT_SECRET || '784b9c69e2df7340400973f0aafb7cdbf7f2d843'
+    const callbackURL = config.CALLBACK_URL || 'http://localhost:8080/api/sessions/githubcallback'
     passport.use('github', new GithubStrategy({
-        clientID: config.CLIENT_ID,
-        clientSecret: config.CLIENT_SECRET,
-        callbackURL: config.CALLBACK_URL
+        clientID: clientID,
+        clientSecret: clientID,
+        callbackURL: callbackURL
     }, async (_accessToken, _refreshToken, profile, done) => {
         try {
             //console.log('Profile de github: ', profile, profile._json)
