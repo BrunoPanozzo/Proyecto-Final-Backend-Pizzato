@@ -134,8 +134,11 @@ class SessionController {
         const { email } = req.body
         if (email) {
             try {
+                const URL = process.env.ENVIRONMENT == 'production'
+                        ? "proyecto-final-backend-pizzato-production.up.railway.app"
+                        : "localhost:8080"
                 const token = jwt.sign({ email }, SECRET, { expiresIn: '1h' })
-                const resetLink = `http://localhost:8080/reset_password/${token}`
+                const resetLink = `http://${URL}/reset_password/${token}`
                 await transport.sendMail({
                     from: config.ADMIN_EMAIL,
                     to: `${email}`,

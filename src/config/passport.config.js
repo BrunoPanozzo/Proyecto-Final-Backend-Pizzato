@@ -29,21 +29,13 @@ const initializeStrategy = () => {
             done(err)
         }
     }))
-    
-    const url = process.env.ENVIRONMENT === 'production'
-    ? process.env.DEPLOY_URL
-    : 'localhost'
-
-    const callback_URL = process.env.ENVIRONMENT === 'production'
-    ? process.env.CALLBACK_URL
-    : `http://${url}:8080/api/sessions/githubcallback`
-
-    const clientID = config.CLIENT_ID || 'Iv1.837ae01fd44b8a61'
-    const clientSecret = config.CLIENT_SECRET || '784b9c69e2df7340400973f0aafb7cdbf7f2d843'
+        
+    const client_ID = config.CLIENT_ID || 'Iv1.837ae01fd44b8a61'
+    const client_SECRET= config.CLIENT_SECRET || '784b9c69e2df7340400973f0aafb7cdbf7f2d843'
     const callbackURL = callback_URL 
     passport.use('github', new GithubStrategy({
-        clientID: clientID,
-        clientSecret: clientSecret,
+        clientID: client_ID,
+        clientSecret: client_SECRET,
         callbackURL: callbackURL
     }, async (_accessToken, _refreshToken, profile, done) => {
         try {
