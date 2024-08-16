@@ -29,7 +29,7 @@ const initializeStrategy = () => {
             done(err)
         }
     }))
-        
+          
     const client_ID = config.CLIENT_ID || 'Iv1.837ae01fd44b8a61'
     const client_SECRET= config.CLIENT_SECRET || '784b9c69e2df7340400973f0aafb7cdbf7f2d843'
     const callbackURL = config.CALLBACK_URL || 'http://localhost:8080/api/sessions/githubcallback' 
