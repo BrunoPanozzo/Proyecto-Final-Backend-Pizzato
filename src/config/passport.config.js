@@ -29,10 +29,15 @@ const initializeStrategy = () => {
             done(err)
         }
     }))
-          
+
+    const URL = process.env.ENVIRONMENT == 'production'
+                ? "proyecto-final-backend-pizzato-production.up.railway.app"
+                : "localhost:8080"
+    const callback_URL = `http://${URL}/api/sessions/githubcallback`
+
     const client_ID = config.CLIENT_ID || 'Iv1.837ae01fd44b8a61'
-    const client_SECRET= config.CLIENT_SECRET || '784b9c69e2df7340400973f0aafb7cdbf7f2d843'
-    const callback_URL = config.CALLBACK_URL || 'http://localhost:8080/api/sessions/githubcallback' 
+    const client_SECRET = config.CLIENT_SECRET || '784b9c69e2df7340400973f0aafb7cdbf7f2d843'
+    //const callback_URL = config.CALLBACK_URL || 'http://localhost:8080/api/sessions/githubcallback' 
     passport.use('github', new GithubStrategy({
         clientID: client_ID,
         clientSecret: client_SECRET,
@@ -114,7 +119,7 @@ const initializeStrategy = () => {
     passport.use('reset_password', new LocalStrategy({
         usernameField: 'email'
     }, async (username, password, done) => {
-        try {            
+        try {
             if (!username || !password) {
                 return done(null, false)
             }
@@ -144,13 +149,13 @@ const initializeStrategy = () => {
     passport.use('login', new LocalStrategy({
         usernameField: 'email'
     }, async (username, password, done) => {
-        try {         
+        try {
             if (!username || !password) {
                 return done(null, false)
             }
 
             //let user = await User.findOne({ email: username });
-            let user               
+            let user
             if (username === config.ADMIN_EMAIL && password === config.ADMIN_PASSWORD) {
                 // Datos de sesión para el usuario coder Admin  
                 user = {
@@ -162,8 +167,8 @@ const initializeStrategy = () => {
                     password: password,
                     cart: null,
                     rol: "admin",
-                    last_connection: Date.now()                   
-                };                
+                    last_connection: Date.now()
+                };
                 return done(null, user);
             }
 
@@ -177,15 +182,15 @@ const initializeStrategy = () => {
                     email: username,
                     password: password,
                     cart: null,
-                    rol: "superadmin"               
+                    rol: "superadmin"
                 };
                 return done(null, user);
-            }  
-            
-            user = await UserDAO.findByEmail({ email: username })    
-        
+            }
+
+            user = await UserDAO.findByEmail({ email: username })
+
             // 1. verificar que el usuario exista en la BD           
-            if (!user) {                
+            if (!user) {
                 return done(null, false, "User doesn't exist");
             }
 
