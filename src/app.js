@@ -78,8 +78,8 @@ app.use('/carts', express.static(`${__dirname}/../public`));
 
 app.use(session({
     store: MongoStore.create({
-        dbName: config.DB_NAME,
-        mongoUrl: config.MONGO_URL,
+        dbName: process.env.DB_NAME,
+        mongoUrl: process.env.MONGO_URL,
         ttl: 60
     }),
     secret: 'secretCoder',
@@ -112,12 +112,12 @@ const main = async () => {
 
     app.use(errorHandler)
 
-    await mongoose.connect(config.MONGO_URL,
+    await mongoose.connect(process.env.MONGO_URL,
         {
-            dbName: config.DB_NAME
+            dbName: process.env.DB_NAME
         })
     
-    const PORT = config.PORT || 8080
+    const PORT = process.env.PORT || 8080
     const httpServer = app.listen(PORT, () => {
         console.log('Servidor listo!!')
     })

@@ -1,4 +1,4 @@
-const config = require('../config/config')
+//const config = require('../config/config')
 const { isValidPassword } = require('../utils/hashing')
 
 class JwtServices {
@@ -9,26 +9,26 @@ class JwtServices {
 
     async login(email, password) { 
         let user      
-        if (email === config.ADMIN_EMAIL && password === config.ADMIN_PASSWORD) {
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
             // Datos de sesión para el usuario coder Admin
             user = {
                 first_name: "Usuario",
                 last_name: "de CODER",
                 age: 21,
-                email: config.ADMIN_EMAIL,
+                email: process.env.ADMIN_EMAIL,
                 cart: null,
                 rol: "admin",
                 _id: "jh235hlki23463nkhlo",
                 last_connection: Date.now()
             }            
         }
-        else if (email === config.SUPER_ADMIN_EMAIL && password === config.SUPER_ADMIN_PASSWORD) {
+        else if (email === process.env.SUPER_ADMIN_EMAIL && password === process.env.SUPER_ADMIN_PASSWORD) {
             // Datos de sesión para el usuario coder Admin
             user = {
                 first_name: "Usuario",
                 last_name: "de CODER",
                 age: 40,
-                email: config.SUPER_ADMIN_EMAIL,
+                email: process.env.SUPER_ADMIN_EMAIL,
                 cart: null,
                 rol: "superadmin",
                 _id: "kflshGKSGNasbsgj3dae",
@@ -61,13 +61,13 @@ class JwtServices {
     }
 
     async getUserByEmail(email) {  
-        //if (email == config.ADMIN_EMAIL) {   
+        //if (email == process.env.ADMIN_EMAIL) {   
         if (email == 'admin') {
             let user = {
                 first_name: "Usuario",
                 last_name: "de CODER",
                 age: 21,
-                email: config.ADMIN_EMAIL,
+                email: process.env.ADMIN_EMAIL,
                 cart: null,
                 rol: "admin",
                 _id: "jh235hlki23463nkhlo"

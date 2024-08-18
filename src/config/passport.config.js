@@ -7,7 +7,7 @@ const UserDAO = new User()
 
 const { hashPassword, isValidPassword } = require('../utils/hashing')
 const { Strategy, ExtractJwt } = require('passport-jwt')
-const config = require('../config/config')
+//const config = require('../config/config')
 const { CartDAO } = require('../dao/mongo/cart.dao')
 const cartDAO = new CartDAO()
 
@@ -18,7 +18,7 @@ const JwtStrategy = Strategy
 const cookieExtractor = req => req && req.cookies ? req.cookies['accessToken'] : null
 
 const initializeStrategy = () => {
-    const secret = config.SECRET || 'aflakdgSAlsdgakfaklgavglKF'
+    const secret = process.env.SECRET || 'aflakdgSAlsdgakfaklgavglKF'
     passport.use('jwt', new JwtStrategy({
         jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
         secretOrKey: secret
@@ -29,16 +29,14 @@ const initializeStrategy = () => {
             done(err)
         }
     }))
+  
 
-    const URL = process.env.ENVIRONMENT == 'production'
-                ? "proyecto-final-backend-pizzato-production.up.railway.app"
-                : "localhost:8080"
-    const callback_URL = `http://${URL}/api/sessions/githubcallback`
+    const client_ID = process.env.CLIENT_ID || 'Iv1.837ae01fd44b8a61'
+    const client_SECRET = process.env.CLIENT_SECRET || '784b9c69e2df7340400973f0aafb7cdbf7f2d843'
+    const callback_URL = process.env.ENVIRONMENT == 'production'
+                        ? "proyecto-final-backend-pizzato-production.up.railway.app"
+                        : process.env.CALLBACK_URL
 
-    const client_ID = config.CLIENT_ID || 'Iv1.837ae01fd44b8a61'
-    const client_SECRET = config.CLIENT_SECRET || '784b9c69e2df7340400973f0aafb7cdbf7f2d843'
-    //const callback_URL = config.CALLBACK_URL || 'http://localhost:8080/api/sessions/githubcallback' 
-    
     passport.use('github', new GithubStrategy({
         clientID: client_ID,
         clientSecret: client_SECRET,
@@ -126,7 +124,7 @@ const initializeStrategy = () => {
             }
 
             let user
-            if (username === config.ADMIN_EMAIL) {
+            if (username === process.env.ADMIN_EMAIL) {
                 return done(null, false)
             }
             // 1. verificar que el usuario exista en la BD
@@ -157,7 +155,7 @@ const initializeStrategy = () => {
 
             //let user = await User.findOne({ email: username });
             let user
-            if (username === config.ADMIN_EMAIL && password === config.ADMIN_PASSWORD) {
+            if (username === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
                 // Datos de sesión para el usuario coder Admin  
                 user = {
                     _id: "jh235hlki23463nkhlo",
@@ -173,7 +171,7 @@ const initializeStrategy = () => {
                 return done(null, user);
             }
 
-            if (username === config.SUPER_ADMIN_EMAIL && password === config.SUPER_ADMIN_PASSWORD) {
+            if (username === process.env.SUPER_ADMIN_EMAIL && password === process.env.SUPER_ADMIN_PASSWORD) {
                 // Datos de sesión para el usuario coder superadmin
                 user = {
                     _id: "kflshGKSGNasbsgj3dae",
@@ -212,7 +210,7 @@ const initializeStrategy = () => {
     // simplemente podemos usar su id
     passport.serializeUser((user, done) => {
         // console.log('serialized!', user)
-        if (user.email === config.ADMIN_EMAIL || user.email === config.SUPER_ADMIN_EMAIL) {
+        if (user.email === process.env.ADMIN_EMAIL || user.email === process.env.SUPER_ADMIN_EMAIL) {
             // Serialización especial para los usuarios 'adminCoder@coder.com' y 'super@admin.com'
             done(null, { _id: user._id, first_name: user.first_name, last_name: user.last_name, age: user.age, email: user.email, rol: user.rol, cart: user.cart });
         } else {
@@ -224,7 +222,7 @@ const initializeStrategy = () => {
     // el cual colocará en req.user para que nosotros podamos usar
     passport.deserializeUser(async (id, done) => {
         //console.log('deserialized!', id)
-        if (id.email === config.ADMIN_EMAIL || id.email === config.SUPER_ADMIN_EMAIL) {
+        if (id.email === process.env.ADMIN_EMAIL || id.email === process.env.SUPER_ADMIN_EMAIL) {
             // Deserialización especial para los usuarios 'adminCoder@coder.com' y 'super@admin.com'
             done(null, id);
         } else {

@@ -1,5 +1,5 @@
 const winston = require('winston')
-const config = require('../config/config')
+//const config = require('../config/config')
 
 const customLevelsOptions = {
     levels: {
@@ -51,7 +51,7 @@ const prodLogger = winston.createLogger({
     ]
 })
 
-const logger = config.ENVIRONMENT === 'production'
+const logger = process.env.ENVIRONMENT === 'production'
     ? prodLogger
     : devLogger
 

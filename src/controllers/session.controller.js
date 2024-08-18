@@ -5,7 +5,7 @@ const { generateUser } = require("../mock/generateUser")
 const transport = require("../config/transport")
 const jwt = require('jsonwebtoken')
 const { SECRET } = require('../config/config')
-const config = require('../config/config')
+//const config = require('../config/config')
 
 class SessionController {
 
@@ -140,7 +140,7 @@ class SessionController {
                 const token = jwt.sign({ email }, SECRET, { expiresIn: '1h' })
                 const resetLink = `http://${URL}/reset_password/${token}`
                 await transport.sendMail({
-                    from: config.ADMIN_EMAIL,
+                    from: process.env.ADMIN_EMAIL,
                     to: `${email}`,
                     subject: 'Solicitud de restauracion de contraseña',
                     html: `<div>

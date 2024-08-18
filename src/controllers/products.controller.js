@@ -2,7 +2,7 @@ const { ProductsService } = require('../services/products.service')
 const { Product: ProductDAO } = require('../dao')
 const { ProductDTO } = require('../dao/DTOs/product.dto')
 const transport = require("../config/transport")
-const config = require('../config/config')
+//const config = require('../config/config')
 
 class ProductsController {
 
@@ -139,7 +139,7 @@ class ProductsController {
                 if (req.session.user.rol === 'premium') {
                     // Enviar correo electrónico al usuario premium por el producto eliminado 
                     const mailOptions = {
-                        from: config.ADMIN_EMAIL,
+                        from: process.env.ADMIN_EMAIL,
                         to: req.session.user.email,  // es igual a producto.owner
                         subject: 'Ha sido eliminado un producto de un usuario PREMIUM',
                         text: 'Se ha eliminado un producto creado por Ud.'
