@@ -117,8 +117,8 @@ const main = async () => {
             dbName: process.env.DB_NAME
         })
     
-    const PORT = process.env.PORT || 8080
-    const httpServer = app.listen(PORT, () => {
+    const port = process.env.PORT || 8080
+    const httpServer = app.listen(port, () => {
         console.log('Servidor listo!!')
     })
 
