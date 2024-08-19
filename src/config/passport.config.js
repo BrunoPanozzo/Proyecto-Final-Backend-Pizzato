@@ -153,8 +153,12 @@ const initializeStrategy = () => {
                 return done(null, false)
             }
 
+            console.log(username)
+            console.log(password)
+            console.log(process.env.ADMIN_EMAIL)
+            console.log(process.env.ADMIN_PASSWORD)
             //let user = await User.findOne({ email: username });
-            let user
+            let user            
             if (username === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
                 // Datos de sesión para el usuario coder Admin  
                 user = {
@@ -185,6 +189,8 @@ const initializeStrategy = () => {
                 };
                 return done(null, user);
             }
+
+            console.log('sigo')
 
             user = await UserDAO.findByEmail({ email: username })
         
