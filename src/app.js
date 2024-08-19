@@ -10,6 +10,7 @@ const { Product: ProductDAO } = require('./dao')
 //const { ProductsService } = require('./services/products.service')
 const swaggerJSDoc = require('swagger-jsdoc')
 const { serve, setup } = require('swagger-ui-express')
+const cors = require('cors')
 
 const CartsRouter = require('./routes/carts.router')
 const cartsRouter = new CartsRouter().getRouter()
@@ -58,6 +59,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use(express.static(`${__dirname}/../public`))
+
+app.use(cors())
 
 // configuramos handlebars 
 const handlebars = handlebarsExpress.create({
