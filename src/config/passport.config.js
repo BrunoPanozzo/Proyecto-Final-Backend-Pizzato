@@ -34,7 +34,7 @@ const initializeStrategy = () => {
     const client_ID = process.env.CLIENT_ID || 'Iv1.837ae01fd44b8a61'
     const client_SECRET = process.env.CLIENT_SECRET || '784b9c69e2df7340400973f0aafb7cdbf7f2d843'
     const callback_URL = process.env.ENVIRONMENT == 'production'
-                        ? "proyecto-final-backend-pizzato-production.up.railway.app"
+                        ? "https://proyecto-final-backend-pizzato-production.up.railway.app/api/sessions/githubcallback"  
                         : process.env.CALLBACK_URL
 
     passport.use('github', new GithubStrategy({
@@ -152,11 +152,7 @@ const initializeStrategy = () => {
             if (!username || !password) {
                 return done(null, false)
             }
-
-            console.log(username)
-            console.log(password)
-            console.log(process.env.ADMIN_EMAIL)
-            console.log(process.env.ADMIN_PASSWORD)
+            
             //let user = await User.findOne({ email: username });
             let user            
             if (username === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
