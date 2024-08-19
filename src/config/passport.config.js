@@ -153,10 +153,6 @@ const initializeStrategy = () => {
                 return done(null, false)
             }
 
-            console.log(process.env.ADMIN_EMAIL)
-            
-            console.log(process.env.ADMIN_PASSWORD)
-
             //let user = await User.findOne({ email: username });
             let user
             if (username === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
@@ -192,6 +188,8 @@ const initializeStrategy = () => {
 
             user = await UserDAO.findByEmail({ email: username })
 
+            console.log(user)
+
             // 1. verificar que el usuario exista en la BD           
             if (!user) {
                 return done(null, false, "User doesn't exist");
@@ -202,6 +200,8 @@ const initializeStrategy = () => {
                 return done(null, false, "Invalid Password");
             }
 
+            console.log('sigo')
+            
             return done(null, user);
         }
         catch (err) {
