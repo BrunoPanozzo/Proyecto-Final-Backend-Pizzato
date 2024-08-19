@@ -31,8 +31,8 @@ const initializeStrategy = () => {
     }))
   
 
-    const client_ID = process.env.CLIENT_ID || 'Iv1.837ae01fd44b8a61'
-    const client_SECRET = process.env.CLIENT_SECRET || '784b9c69e2df7340400973f0aafb7cdbf7f2d843'
+    const client_ID = process.env.CLIENT_ID || 'Ov23li1QDXH6GAk4RDIF'
+    const client_SECRET = process.env.CLIENT_SECRET || '6520ca7867c190ff18ec4732ff21c3134957c0c2'
     const callback_URL = process.env.ENVIRONMENT == 'production'
                         ? "https://proyecto-final-backend-pizzato-production.up.railway.app/api/sessions/githubcallback"  
                         : process.env.CALLBACK_URL
@@ -42,8 +42,7 @@ const initializeStrategy = () => {
         clientSecret: client_SECRET,
         callbackURL: callback_URL
     }, async (_accessToken, _refreshToken, profile, done) => {
-        try { 
-            console.log(callback_URL)
+        try {             
             //console.log('Profile de github: ', profile, profile._json)
 
             //const user = await User.findOne({ email: profile._json.email })
