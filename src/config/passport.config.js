@@ -153,6 +153,8 @@ const initializeStrategy = () => {
                 return done(null, false)
             }
 
+            console.log(process.env)
+            
             //let user = await User.findOne({ email: username });
             let user
             if (username === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
