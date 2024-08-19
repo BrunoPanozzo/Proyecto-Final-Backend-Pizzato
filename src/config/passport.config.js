@@ -42,7 +42,8 @@ const initializeStrategy = () => {
         clientSecret: client_SECRET,
         callbackURL: callback_URL
     }, async (_accessToken, _refreshToken, profile, done) => {
-        try {
+        try { 
+            console.log(callback_URL)
             //console.log('Profile de github: ', profile, profile._json)
 
             //const user = await User.findOne({ email: profile._json.email })
