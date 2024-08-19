@@ -187,9 +187,7 @@ const initializeStrategy = () => {
             }
 
             user = await UserDAO.findByEmail({ email: username })
-
-            console.log(user)
-
+        
             // 1. verificar que el usuario exista en la BD           
             if (!user) {
                 return done(null, false, "User doesn't exist");
@@ -198,10 +196,8 @@ const initializeStrategy = () => {
             // 2. validar su password
             if (!isValidPassword(password, user.password)) {
                 return done(null, false, "Invalid Password");
-            }
+            }           
 
-            console.log('sigo')
-            
             return done(null, user);
         }
         catch (err) {
