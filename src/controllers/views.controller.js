@@ -141,7 +141,7 @@ class ViewsController {
                 title: 'Product Detail',
                 scripts: ['productoDetail.js'],
                 useSweetAlert: true,
-                styles: ['productos.css'],
+                styles: ['styles.css'],
                 useWS: false,
                 cid,
                 product,
@@ -198,7 +198,7 @@ class ViewsController {
             title: 'Product Detail',
             scripts: ['productoDetail.js'],
             useSweetAlert: true,
-            styles: ['productos.css'],
+            styles: ['styles.css'],
             useWS: false,
             product,
             cid,
@@ -333,12 +333,20 @@ class ViewsController {
 
     async getUsers(req, res) {
         try {
-            let listado = []
+            // let listado = []           
+            // listado = await this.usersService.getUsers()
+            // res.render('admin', { docs: listado })
+           
+            let docs = []           
+            docs = await this.usersService.getUsers()
 
-            listado = await this.usersService.getUsers()
-
-            res.render('admin', { docs: listado })
-
+            let data = {
+                title: 'Administrador de usuarios',               
+                useSweetAlert: true,                
+                useWS: false,                             
+                docs
+            }
+            res.render('admin', data)         
         } catch (err) {
             req.logger.error(`${err} - ${req.method} en ${req.url} - ${new Date().toLocaleDateString()} `);
         }
